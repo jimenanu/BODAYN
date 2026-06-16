@@ -108,8 +108,38 @@ function GatiGame() {
 
 
 function App() {
+  const [entered, setEntered] = useState(false)
+
   return (
-<div className="pageWrapper">
+    <>
+      {!entered && (
+        <div className="inviteOverlay">
+          <div className="inviteEnvelopeScene">
+            <div className="inviteEnvelope">
+              <div className="inviteEnvelopeBack"></div>
+              <div className="invitationPaper">
+                <p className="inviteSmall">
+                  Con amor inmenso, los invitamos a ser parte de nuestra
+                  felicidad. Acompáñanos a nuestra ceremonia en presencia de
+                  Dios.
+                </p>
+
+                <img
+                  className="inviteImage"
+                  src="/invitacion.jpg"
+                  alt="Invitación de boda de Rafael y Jimena"
+                />
+
+                <button onClick={() => setEntered(true)}>Enter</button>
+              </div>
+              <div className="inviteEnvelopeFlap"></div>
+              <div className="inviteEnvelopeFront"></div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="pageWrapper">
   <main>
       <a
   href="https://forms.gle/Sjww1UcEo9ob4oCY7"
@@ -732,7 +762,8 @@ function App() {
   <span>July 2026</span>
 </footer>
       </main>
-</div>
+      </div>
+    </>
   )
 }
 

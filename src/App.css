@@ -825,3 +825,142 @@ h1 {
   opacity: 0.7;
 }
 
+
+/* ===== Invite gate overlay (sobre + invitación impresa) ===== */
+.inviteOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #f6f4ef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.inviteEnvelopeScene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: min(92vw, 520px);
+  height: 720px;
+  transform: translateY(20px);
+}
+
+.inviteEnvelope {
+  position: relative;
+  width: 430px;
+  height: 285px;
+}
+
+.inviteEnvelopeBack {
+  position: absolute;
+  inset: 85px 0 0;
+  z-index: 1;
+  background: #eae5dc;
+  border: 1.5px solid #050505;
+}
+
+.inviteEnvelopeFront {
+  position: absolute;
+  inset: 85px 0 0;
+  z-index: 4;
+  background: #f2ede4;
+  border: 1.5px solid #050505;
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+}
+
+.inviteEnvelopeFlap {
+  position: absolute;
+  top: 85px;
+  left: 0;
+  width: 430px;
+  height: 170px;
+  z-index: 6;
+  background: #e2d9c9;
+  border: 1.5px solid #050505;
+  clip-path: polygon(0 0, 50% 78%, 100% 0);
+  transform-origin: top;
+  animation: 1s 0.4s forwards inviteOpenFlap;
+}
+
+.invitationPaper {
+  position: absolute;
+  top: 90px;
+  left: 42px;
+  z-index: 10;
+  width: 346px;
+  min-height: 500px;
+  padding: 40px 30px;
+  text-align: center;
+  background: #fff;
+  border: 1.5px solid #050505;
+  box-shadow: 0 25px 60px #0000002e;
+  animation: 1.3s 0.9s forwards invitePullPaper;
+}
+
+.invitationPaper:before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid #0003;
+}
+
+.inviteSmall {
+  color: #333;
+  margin-bottom: 22px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.inviteImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 8px;
+  border: 1px solid #050505;
+  box-shadow: 0 8px 22px #0000001f;
+}
+
+.invitationPaper button {
+  position: relative;
+  z-index: 20;
+  margin-top: 22px;
+  padding: 11px 26px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  cursor: pointer;
+  background: #050505;
+  border: 1px solid #050505;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.invitationPaper button:hover {
+  color: #050505;
+  background: #fff;
+}
+
+@keyframes inviteOpenFlap {
+  0% { transform: rotateX(0); }
+  to { transform: rotateX(180deg); }
+}
+
+@keyframes invitePullPaper {
+  0% { transform: translateY(0); }
+  to { transform: translateY(-240px); }
+}
+
+@media (max-width: 560px) {
+  .inviteEnvelope { width: 340px; }
+  .inviteEnvelopeBack,
+  .inviteEnvelopeFront { inset: 80px 0 0; }
+  .inviteEnvelopeFlap { width: 340px; height: 145px; top: 80px; }
+  .invitationPaper { width: 284px; padding: 30px 22px; left: 28px; }
+  @keyframes invitePullPaper {
+    0% { transform: translateY(0); }
+    to { transform: translateY(-340px); }
+  }
+}
