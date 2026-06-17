@@ -834,12 +834,13 @@ h1 {
   inset: 0;
   z-index: 9999;
   background:
-    radial-gradient(circle at 50% 16%, rgba(199,169,107,0.14), transparent 42%),
-    linear-gradient(160deg, #15141a, #0b0a0d 72%);
+    radial-gradient(circle at 50% 14%, rgba(199,169,107,0.12), transparent 44%),
+    linear-gradient(160deg, #0a0a0c, #050506 72%);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 20px;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -847,42 +848,42 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: min(92vw, 520px);
-  height: 720px;
-  transform: translateY(20px);
+  width: min(94vw, 600px);
+  height: 800px;
+  transform: translateY(8px);
 }
 
 .inviteEnvelope {
   position: relative;
-  width: 430px;
-  height: 285px;
+  width: 516px;
+  height: 342px;
 }
 
 .inviteEnvelopeBack {
   position: absolute;
-  inset: 85px 0 0;
+  inset: 102px 0 0;
   z-index: 1;
-  background: #1c1a21;
+  background: #131218;
   border: 1.5px solid #c7a96b;
 }
 
 .inviteEnvelopeFront {
   position: absolute;
-  inset: 85px 0 0;
+  inset: 102px 0 0;
   z-index: 4;
-  background: #211f27;
+  background: #181720;
   border: 1.5px solid #c7a96b;
   clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
 }
 
 .inviteEnvelopeFlap {
   position: absolute;
-  top: 85px;
+  top: 102px;
   left: 0;
-  width: 430px;
-  height: 170px;
+  width: 516px;
+  height: 204px;
   z-index: 6;
-  background: #26242d;
+  background: #1d1b25;
   border: 1.5px solid #c7a96b;
   clip-path: polygon(0 0, 50% 78%, 100% 0);
   transform-origin: top;
@@ -891,23 +892,23 @@ h1 {
 
 .invitationPaper {
   position: absolute;
-  top: 90px;
-  left: 26px;
+  top: 108px;
+  left: 31px;
   z-index: 10;
-  width: 378px;
-  min-height: 450px;
-  padding: 30px 20px;
+  width: 454px;
+  min-height: 540px;
+  padding: 34px 24px;
   text-align: center;
   background: #faf7f1;
   border: 1px solid #c7a96b;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
   animation: 1.3s 0.9s forwards invitePullPaper;
 }
 
 .invitationPaper:before {
   content: "";
   position: absolute;
-  inset: 12px;
+  inset: 13px;
   border: 1px solid rgba(199,169,107,0.55);
   pointer-events: none;
 }
@@ -915,9 +916,9 @@ h1 {
 .inviteSmall {
   position: relative;
   color: #3a352c;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   font-family: Georgia, serif;
-  font-size: 12.5px;
+  font-size: 13.5px;
   line-height: 1.6;
 }
 
@@ -928,27 +929,27 @@ h1 {
   height: auto;
   margin: 0 auto;
   border: 1px solid #1c1a21;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.2);
 }
 
 .invitationPaper button {
   position: relative;
   z-index: 20;
-  margin-top: 18px;
-  padding: 11px 30px;
+  margin-top: 22px;
+  padding: 12px 34px;
   color: #faf7f1;
   text-transform: uppercase;
   letter-spacing: 1.4px;
   cursor: pointer;
-  background: #1c1a21;
+  background: #14131a;
   border: 1px solid #c7a96b;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 12.5px;
   transition: 0.25s ease;
 }
 
 .invitationPaper button:hover {
-  color: #1c1a21;
+  color: #14131a;
   background: #c7a96b;
 }
 
@@ -959,18 +960,30 @@ h1 {
 
 @keyframes invitePullPaper {
   0% { transform: translateY(0); }
-  to { transform: translateY(-240px); }
+  to { transform: translateY(-288px); }
 }
 
 @media (max-width: 560px) {
-  .inviteEnvelope { width: 340px; }
+  .inviteOverlay { padding: 10px; }
+  .inviteEnvelopeScene { width: 96vw; height: 640px; }
+  .inviteEnvelope { width: min(94vw, 356px); height: min(62vw, 236px); }
   .inviteEnvelopeBack,
-  .inviteEnvelopeFront { inset: 80px 0 0; }
-  .inviteEnvelopeFlap { width: 340px; height: 145px; top: 80px; }
-  .invitationPaper { width: 304px; padding: 26px 14px; left: 18px; min-height: 400px; }
+  .inviteEnvelopeFront { inset: 17vw 0 0; }
+  .inviteEnvelopeFlap {
+    width: min(94vw, 356px);
+    height: min(31vw, 118px);
+    top: 17vw;
+  }
+  .invitationPaper {
+    width: min(82vw, 312px);
+    left: 6vw;
+    top: 18vw;
+    min-height: 420px;
+    padding: 26px 16px;
+  }
   @keyframes invitePullPaper {
     0% { transform: translateY(0); }
-    to { transform: translateY(-330px); }
+    to { transform: translateY(-300px); }
   }
 }
 
@@ -978,7 +991,7 @@ h1 {
    DARK PREMIUM THEME + RESPONSIVE  (al final: sobrescribe arriba)
    ============================================================ */
 :root {
-  --ink: #0c0b0e;
+  --ink: #050506;
   --cream: #ece6d8;
   --muted: rgba(236, 230, 216, 0.66);
   --gold: #c7a96b;
@@ -994,7 +1007,7 @@ main {
   background:
     radial-gradient(circle at 18% 12%, rgba(199,169,107,0.10), transparent 30%),
     radial-gradient(circle at 85% 0%, rgba(199,169,107,0.06), transparent 26%),
-    linear-gradient(160deg, #131217, #0c0b0e 62%);
+    linear-gradient(160deg, #0b0b0d, #050506 62%);
 }
 
 /* HERO */
@@ -1039,7 +1052,7 @@ main {
 .mapEmbed { border: 1px solid var(--hair); }
 
 .footer {
-  background: #0a090c;
+  background: #020203;
   border-top: 1px solid var(--hair);
   color: var(--muted);
 }
@@ -1163,3 +1176,74 @@ main {
   opacity: 1;
   padding: 0 24px 84px;
 }
+
+/* ============================================================
+   GATI GAME — noche premium (al final: sobrescribe arriba)
+   ============================================================ */
+.gameWrap {
+  height: 380px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  background:
+    radial-gradient(circle at 80% 22%, rgba(199,169,107,0.16), transparent 26%),
+    radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.7), transparent 60%),
+    radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.5), transparent 60%),
+    radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.45), transparent 60%),
+    radial-gradient(1px 1px at 12% 40%, rgba(255,255,255,0.4), transparent 60%),
+    linear-gradient(to bottom, #0a0f1e 0%, #0c1226 46%, #11101a 58%, #0a0a0f 100%);
+}
+
+/* horizonte dorado tenue */
+.gameWrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 42%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(199,169,107,0.5), transparent);
+  z-index: 1;
+}
+
+.score {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* edificios: silueta oscura con borde superior dorado */
+.building,
+.sail,
+.curve,
+.screw {
+  background: #0c0c12;
+  border-top: 1px solid rgba(199,169,107,0.35);
+}
+
+/* ventanas cálidas (luz dorada de noche) */
+.building::before {
+  background: rgba(214,182,120,0.85);
+  box-shadow:
+    18px 0 rgba(214,182,120,0.85),
+    0 22px rgba(214,182,120,0.7),
+    18px 22px rgba(214,182,120,0.7),
+    0 44px rgba(214,182,120,0.6),
+    18px 44px rgba(214,182,120,0.6),
+    0 66px rgba(214,182,120,0.5),
+    18px 66px rgba(214,182,120,0.5),
+    0 88px rgba(214,182,120,0.42),
+    18px 88px rgba(214,182,120,0.42),
+    0 110px rgba(214,182,120,0.36),
+    18px 110px rgba(214,182,120,0.36);
+}
+
+/* game over en oscuro */
+.gameOver {
+  background: rgba(5, 5, 6, 0.82);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  color: var(--cream);
+}
+
+.gameOver h3 { color: var(--gold); }
+.gameOver p { color: var(--muted); }
