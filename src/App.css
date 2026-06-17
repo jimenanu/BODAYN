@@ -826,81 +826,261 @@ h1 {
 }
 
 
-/* ===== Invite gate overlay (invitación impresa, grande) ===== */
+/* ============================================================
+   SPLASH — sobre que se abre y la invitación sale (dark premium)
+   ============================================================ */
 .inviteOverlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #f6f4ef;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(199,169,107,0.14), transparent 42%),
+    linear-gradient(160deg, #15141a, #0b0a0d 72%);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4vh 20px;
+  padding: 24px;
   overflow-y: auto;
 }
 
-.inviteCard {
-  position: relative;
-  width: min(94vw, 760px);
-  margin: auto;
-  background: #fff;
-  border: 1.5px solid #050505;
-  box-shadow: 0 25px 70px #00000026;
-  padding: clamp(22px, 4vw, 46px);
-  text-align: center;
-  animation: inviteFadeIn 0.9s ease both;
+.inviteEnvelopeScene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: min(92vw, 520px);
+  height: 720px;
+  transform: translateY(20px);
 }
 
-.inviteCard:before {
+.inviteEnvelope {
+  position: relative;
+  width: 430px;
+  height: 285px;
+}
+
+.inviteEnvelopeBack {
+  position: absolute;
+  inset: 85px 0 0;
+  z-index: 1;
+  background: #1c1a21;
+  border: 1.5px solid #c7a96b;
+}
+
+.inviteEnvelopeFront {
+  position: absolute;
+  inset: 85px 0 0;
+  z-index: 4;
+  background: #211f27;
+  border: 1.5px solid #c7a96b;
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+}
+
+.inviteEnvelopeFlap {
+  position: absolute;
+  top: 85px;
+  left: 0;
+  width: 430px;
+  height: 170px;
+  z-index: 6;
+  background: #26242d;
+  border: 1.5px solid #c7a96b;
+  clip-path: polygon(0 0, 50% 78%, 100% 0);
+  transform-origin: top;
+  animation: 1s 0.4s forwards inviteOpenFlap;
+}
+
+.invitationPaper {
+  position: absolute;
+  top: 90px;
+  left: 42px;
+  z-index: 10;
+  width: 346px;
+  min-height: 430px;
+  padding: 34px 26px;
+  text-align: center;
+  background: #faf7f1;
+  border: 1px solid #c7a96b;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  animation: 1.3s 0.9s forwards invitePullPaper;
+}
+
+.invitationPaper:before {
   content: "";
   position: absolute;
   inset: 12px;
-  border: 1px solid #0003;
+  border: 1px solid rgba(199,169,107,0.55);
   pointer-events: none;
 }
 
 .inviteSmall {
-  max-width: 540px;
-  margin: 0 auto clamp(18px, 3vw, 30px);
-  color: #333;
+  position: relative;
+  color: #3a352c;
+  margin: 0 0 18px;
   font-family: Georgia, serif;
-  font-size: clamp(13px, 1.6vw, 16px);
-  line-height: 1.65;
+  font-size: 12.5px;
+  line-height: 1.6;
 }
 
 .inviteImage {
+  position: relative;
   display: block;
   width: 100%;
   height: auto;
   margin: 0 auto;
-  border: 1px solid #050505;
-  box-shadow: 0 10px 28px #0000001f;
+  border: 1px solid #1c1a21;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-.inviteCard button {
-  margin-top: clamp(20px, 3vw, 30px);
-  padding: 13px 34px;
-  color: #fff;
+.invitationPaper button {
+  position: relative;
+  z-index: 20;
+  margin-top: 18px;
+  padding: 11px 30px;
+  color: #faf7f1;
   text-transform: uppercase;
   letter-spacing: 1.4px;
   cursor: pointer;
-  background: #050505;
-  border: 1px solid #050505;
+  background: #1c1a21;
+  border: 1px solid #c7a96b;
   border-radius: 999px;
-  font-size: 13px;
-  transition: background 0.2s, color 0.2s;
+  font-size: 12px;
+  transition: 0.25s ease;
 }
 
-.inviteCard button:hover {
-  color: #050505;
-  background: #fff;
+.invitationPaper button:hover {
+  color: #1c1a21;
+  background: #c7a96b;
 }
 
-@keyframes inviteFadeIn {
-  from { opacity: 0; transform: translateY(16px) scale(0.985); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes inviteOpenFlap {
+  0% { transform: rotateX(0); }
+  to { transform: rotateX(180deg); }
+}
+
+@keyframes invitePullPaper {
+  0% { transform: translateY(0); }
+  to { transform: translateY(-240px); }
 }
 
 @media (max-width: 560px) {
-  .inviteOverlay { padding: 16px 14px; align-items: flex-start; }
+  .inviteEnvelope { width: 340px; }
+  .inviteEnvelopeBack,
+  .inviteEnvelopeFront { inset: 80px 0 0; }
+  .inviteEnvelopeFlap { width: 340px; height: 145px; top: 80px; }
+  .invitationPaper { width: 286px; padding: 28px 20px; left: 27px; min-height: 380px; }
+  @keyframes invitePullPaper {
+    0% { transform: translateY(0); }
+    to { transform: translateY(-330px); }
+  }
+}
+
+/* ============================================================
+   DARK PREMIUM THEME + RESPONSIVE  (al final: sobrescribe arriba)
+   ============================================================ */
+:root {
+  --ink: #0c0b0e;
+  --cream: #ece6d8;
+  --muted: rgba(236, 230, 216, 0.66);
+  --gold: #c7a96b;
+  --gold-line: rgba(199, 169, 107, 0.42);
+  --hair: rgba(236, 230, 216, 0.14);
+}
+
+html, body { overflow-x: hidden; }
+
+body { background: var(--ink); color: var(--cream); }
+
+main {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(199,169,107,0.10), transparent 30%),
+    radial-gradient(circle at 85% 0%, rgba(199,169,107,0.06), transparent 26%),
+    linear-gradient(160deg, #131217, #0c0b0e 62%);
+}
+
+/* HERO */
+.hero::before { opacity: 0.05; }
+.initial { color: rgba(236, 230, 216, 0.045); }
+.saveCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--gold-line);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: var(--cream);
+}
+.topText, .amp, .date, .intro,
+.saveCard h1, .saveCard p { color: var(--cream); }
+.smallCaps, .sectionLabel { color: var(--gold); }
+.line { background: var(--gold); }
+.heroButtons a { color: var(--cream); border-color: var(--gold-line); }
+.heroButtons a:hover { background: var(--gold); color: #15140f; border-color: var(--gold); }
+
+/* SECTIONS + CARDS */
+.section h2, .detailSection h2 { color: var(--cream); }
+.alt { background: rgba(255, 255, 255, 0.025); }
+.sectionIntro { color: var(--muted); }
+
+.boxButton, .detailCard, .tipCard {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--gold-line);
+  color: var(--cream);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.boxButton:hover { background: var(--gold); color: #15140f; border-color: var(--gold); }
+.featured { background: var(--gold); color: #15140f; border-color: var(--gold); }
+.boxButton span { color: var(--gold); }
+.featured span { color: #15140f; }
+
+.guideColumn h3, .foodColumn h3 { color: var(--cream); }
+.guideColumn a, .foodColumn a { color: var(--muted); }
+.guideColumn a small { color: var(--gold); }
+.guideColumn a:hover, .foodColumn a:hover { color: var(--gold); opacity: 1; }
+.detailCard a, .detailSection a { color: var(--gold); }
+.mapEmbed { border: 1px solid var(--hair); }
+
+.footer {
+  background: #0a090c;
+  border-top: 1px solid var(--hair);
+  color: var(--muted);
+}
+
+/* RESPONSIVE: grids fluidos (arregla el amontonamiento en móvil) */
+.grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.guideGrid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.detailGrid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.guideListGrid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.tipsGrid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+@media (max-width: 560px) {
+  .section, .detailSection { padding: 60px 18px; }
+  .grid, .guideGrid, .detailGrid,
+  .guideListGrid, .tipsGrid { grid-template-columns: 1fr; }
+}
+
+/* BOTONES FLOTANTES: que no tapen el contenido */
+.rsvpButton { background: var(--gold); color: #15140f; border: 1px solid var(--gold); }
+.rsvpButton:hover { background: transparent; color: var(--gold); border-color: var(--gold); }
+.calendarButton {
+  background: rgba(12, 11, 14, 0.85);
+  color: var(--cream);
+  border: 1px solid var(--gold);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.calendarButton:hover { background: var(--gold); color: #15140f; }
+
+@media (max-width: 700px) {
+  .rsvpButton, .calendarButton {
+    position: fixed;
+    top: auto;
+    bottom: 16px;
+    transform: none;
+    z-index: 1000;
+    font-size: 12px;
+    padding: 12px 0;
+    text-align: center;
+  }
+  .rsvpButton { left: 14px; right: 51%; }
+  .calendarButton { left: 51%; right: 14px; }
+  .footer { padding-bottom: 96px; }
 }
