@@ -656,7 +656,7 @@ h1 {
   width: 46px;
   height: 32px;
   z-index: 5;
-  animation: obstacleMove 2.2s linear infinite;
+  animation: obstacleMove 2.7s linear infinite;
 
   background: linear-gradient(
     to bottom,
@@ -892,12 +892,11 @@ h1 {
 
 .invitationPaper {
   position: absolute;
-  top: 108px;
+  top: 120px;
   left: 31px;
-  z-index: 10;
+  z-index: 5;
   width: 488px;
   min-height: 560px;
-  transform-origin: 50% 0;
   padding: 34px 24px;
   text-align: center;
   background: #ffffff;
@@ -960,8 +959,8 @@ h1 {
 }
 
 @keyframes invitePullPaper {
-  0% { transform: translateY(0) scale(0.55); }
-  to { transform: translateY(-300px) scale(1); }
+  0% { transform: translateY(0); }
+  to { transform: translateY(-348px); }
 }
 
 @media (max-width: 560px) {
@@ -978,13 +977,13 @@ h1 {
   .invitationPaper {
     width: min(88vw, 340px);
     left: 5vw;
-    top: 18vw;
-    min-height: 440px;
+    top: 22vw;
+    min-height: 430px;
     padding: 26px 16px;
   }
   @keyframes invitePullPaper {
-    0% { transform: translateY(0) scale(0.55); }
-    to { transform: translateY(-280px) scale(1); }
+    0% { transform: translateY(0); }
+    to { transform: translateY(-300px); }
   }
 }
 
@@ -1013,7 +1012,12 @@ main {
 
 /* HERO */
 .hero::before { opacity: 0.05; }
-.initial { color: rgba(236, 230, 216, 0.045); }
+.initial {
+  color: rgba(203, 171, 104, 0.10);
+  -webkit-text-stroke: 2px rgba(203, 171, 104, 0.55);
+  text-shadow: 0 0 40px rgba(203, 171, 104, 0.18);
+}
+.amp { color: var(--gold); }
 .saveCard {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--gold-line);
@@ -1270,4 +1274,12 @@ main {
   0%   { transform: translateY(0); }
   45%  { transform: translateY(-130px); }
   100% { transform: translateY(0); }
+}
+
+/* ---- Gati iPhone: evitar menú de imagen y que el toque pase al juego ---- */
+.gameWrap img {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
 }
