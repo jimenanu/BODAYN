@@ -856,7 +856,7 @@ h1 {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 34px 26px 64px;
+  padding: 34px 26px 82px;
   text-align: center;
   background: #ffffff;
   border: 1px solid var(--gold);
@@ -916,24 +916,14 @@ h1 {
 .inviteEnvelopeFront {
   position: relative;
   z-index: 3;
-  height: 150px;
-  margin-top: -46px;
-  background: linear-gradient(180deg, #17181c, #0b0c0f);
+  height: 164px;
+  margin-top: -58px;
   border: 1.5px solid var(--gold);
   box-shadow: 0 26px 60px rgba(0,0,0,0.55);
-}
-
-/* puntita dorada (insinúa la solapa) */
-.inviteEnvelopeFront:before {
-  content: "";
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  width: 16px;
-  height: 16px;
-  border-right: 1.5px solid var(--gold);
-  border-bottom: 1.5px solid var(--gold);
-  transform: translateX(-50%) rotate(45deg);
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--gold-line) 50%, transparent calc(50% + 1px)) left / 50% 100% no-repeat,
+    linear-gradient(to bottom left, transparent calc(50% - 1px), var(--gold-line) 50%, transparent calc(50% + 1px)) right / 50% 100% no-repeat,
+    linear-gradient(180deg, #161719, #0a0b0d);
 }
 
 @keyframes cardRise {
@@ -945,9 +935,9 @@ h1 {
 @media (max-width: 560px) {
   .inviteOverlay { padding: 20px 12px; }
   .inviteEnvelope { width: 94vw; }
-  .invitationPaper { padding: 26px 16px 56px; }
+  .invitationPaper { padding: 26px 16px 70px; }
   .inviteSmall { font-size: 13px; }
-  .inviteEnvelopeFront { height: 132px; margin-top: -42px; }
+  .inviteEnvelopeFront { height: 146px; margin-top: -52px; }
 }
 
 /* ============================================================
@@ -968,14 +958,11 @@ html, body { overflow-x: hidden; }
 body { background: var(--ink); color: var(--cream); }
 
 main {
-  background:
-    radial-gradient(circle at 18% 12%, rgba(199,169,107,0.10), transparent 30%),
-    radial-gradient(circle at 85% 0%, rgba(199,169,107,0.06), transparent 26%),
-    linear-gradient(160deg, #0c0d10, #050506 62%);
+  background: linear-gradient(180deg, #000 0%, #050506 55%, #000 100%);
 }
 
 /* HERO */
-.hero::before { opacity: 0.05; }
+.hero::before { opacity: 0.02; }
 .initial {
   color: rgba(203, 176, 111, 0.04);
   -webkit-text-stroke: 1px rgba(203, 176, 111, 0.30);
@@ -983,8 +970,8 @@ main {
 }
 .amp { color: var(--gold); }
 .saveCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--gold-line);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--hair);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   color: var(--cream);
@@ -992,7 +979,8 @@ main {
 .topText, .amp, .date, .intro,
 .saveCard h1, .saveCard p { color: var(--cream); }
 .smallCaps, .sectionLabel { color: var(--gold); }
-.line { background: var(--gold); }
+.smallCaps { color: var(--muted); letter-spacing: 3px; }
+.line { display: none; }
 .heroButtons a { color: var(--cream); border-color: var(--gold-line); }
 .heroButtons a:hover { background: var(--gold); color: #15140f; border-color: var(--gold); }
 
