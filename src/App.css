@@ -1514,3 +1514,11 @@ img, iframe, video, svg {
 .giftYappyNum {
   overflow-wrap: anywhere;
 }
+
+/* nombre del titular en el bloque de cuenta */
+.giftYappyName {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
