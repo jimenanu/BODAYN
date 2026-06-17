@@ -833,9 +833,13 @@ h1 {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background:
-    radial-gradient(circle at 50% 13%, rgba(203,176,111,0.12), transparent 46%),
-    linear-gradient(160deg, #0a0b0d, #040405 72%);
+  background-color: #050507;
+  background-image:
+    linear-gradient(rgba(5,5,7,0.55), rgba(5,5,7,0.84)),
+    url('/couple.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1348,4 +1352,85 @@ main {
 .guideColumn a:hover span,
 .guideColumn a:hover small {
   color: var(--gold);
+}
+
+/* ============================================================
+   SPLASH paso 1 — sobre cerrado elegante (sobre foto)
+   ============================================================ */
+.inviteCover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: coverIn 1s ease both;
+}
+
+.coverLabel {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-size: clamp(15px, 4.2vw, 20px);
+  color: var(--cream);
+}
+
+.coverEnvelope {
+  position: relative;
+  width: min(78vw, 360px);
+  aspect-ratio: 3 / 2;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.6);
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--gold) 50%, transparent calc(50% + 1px)) left top / 50% 60% no-repeat,
+    linear-gradient(to bottom left, transparent calc(50% - 1px), var(--gold) 50%, transparent calc(50% + 1px)) right top / 50% 60% no-repeat,
+    linear-gradient(165deg, #18181d, #0c0c10);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inviteCover:hover .coverEnvelope {
+  transform: translateY(-4px);
+  box-shadow: 0 42px 92px rgba(0, 0, 0, 0.72);
+}
+
+.coverSeal {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e6cf92, #b18b45);
+  color: #1a1407;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.coverHint {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--muted);
+  animation: coverPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes coverIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes coverPulse {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
 }
