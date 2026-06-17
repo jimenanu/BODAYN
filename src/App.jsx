@@ -358,6 +358,7 @@ function App() {
               <div className="giftYappy">
                 <span className="giftYappyLabel">Banco General · Ahorros</span>
                 <span className="giftYappyNum">04-05-99-037494-3</span>
+                <span className="giftYappyName">Jimena Navarro</span>
               </div>
             </div>
           </div>
