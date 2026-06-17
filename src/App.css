@@ -834,8 +834,8 @@ h1 {
   inset: 0;
   z-index: 9999;
   background:
-    radial-gradient(circle at 50% 14%, rgba(199,169,107,0.12), transparent 44%),
-    linear-gradient(160deg, #0a0a0c, #050506 72%);
+    radial-gradient(circle at 50% 14%, rgba(203,171,104,0.13), transparent 44%),
+    linear-gradient(160deg, #050505, #000 72%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -863,16 +863,16 @@ h1 {
   position: absolute;
   inset: 102px 0 0;
   z-index: 1;
-  background: #131218;
-  border: 1.5px solid #c7a96b;
+  background: #101012;
+  border: 1.5px solid #cbab68;
 }
 
 .inviteEnvelopeFront {
   position: absolute;
   inset: 102px 0 0;
   z-index: 4;
-  background: #181720;
-  border: 1.5px solid #c7a96b;
+  background: #151517;
+  border: 1.5px solid #cbab68;
   clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
 }
 
@@ -883,11 +883,11 @@ h1 {
   width: 516px;
   height: 204px;
   z-index: 6;
-  background: #1d1b25;
-  border: 1.5px solid #c7a96b;
+  background: #1b1b1e;
+  border: 1.5px solid #cbab68;
   clip-path: polygon(0 0, 50% 78%, 100% 0);
   transform-origin: top;
-  animation: 1s 0.4s forwards inviteOpenFlap;
+  animation: 1s 0.4s both inviteOpenFlap;
 }
 
 .invitationPaper {
@@ -895,14 +895,15 @@ h1 {
   top: 108px;
   left: 31px;
   z-index: 10;
-  width: 454px;
-  min-height: 540px;
+  width: 488px;
+  min-height: 560px;
+  transform-origin: 50% 0;
   padding: 34px 24px;
   text-align: center;
-  background: #faf7f1;
-  border: 1px solid #c7a96b;
+  background: #ffffff;
+  border: 1px solid #cbab68;
   box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-  animation: 1.3s 0.9s forwards invitePullPaper;
+  animation: 1.3s 0.9s both invitePullPaper;
 }
 
 .invitationPaper:before {
@@ -915,7 +916,7 @@ h1 {
 
 .inviteSmall {
   position: relative;
-  color: #3a352c;
+  color: #2a2a2a;
   margin: 0 0 20px;
   font-family: Georgia, serif;
   font-size: 13.5px;
@@ -959,8 +960,8 @@ h1 {
 }
 
 @keyframes invitePullPaper {
-  0% { transform: translateY(0); }
-  to { transform: translateY(-288px); }
+  0% { transform: translateY(0) scale(0.55); }
+  to { transform: translateY(-300px) scale(1); }
 }
 
 @media (max-width: 560px) {
@@ -975,15 +976,15 @@ h1 {
     top: 17vw;
   }
   .invitationPaper {
-    width: min(82vw, 312px);
-    left: 6vw;
+    width: min(88vw, 340px);
+    left: 5vw;
     top: 18vw;
-    min-height: 420px;
+    min-height: 440px;
     padding: 26px 16px;
   }
   @keyframes invitePullPaper {
-    0% { transform: translateY(0); }
-    to { transform: translateY(-300px); }
+    0% { transform: translateY(0) scale(0.55); }
+    to { transform: translateY(-280px) scale(1); }
   }
 }
 
@@ -991,12 +992,12 @@ h1 {
    DARK PREMIUM THEME + RESPONSIVE  (al final: sobrescribe arriba)
    ============================================================ */
 :root {
-  --ink: #050506;
-  --cream: #ece6d8;
-  --muted: rgba(236, 230, 216, 0.66);
-  --gold: #c7a96b;
-  --gold-line: rgba(199, 169, 107, 0.42);
-  --hair: rgba(236, 230, 216, 0.14);
+  --ink: #040404;
+  --cream: #f6f6f4;
+  --muted: rgba(246, 246, 244, 0.62);
+  --gold: #cbab68;
+  --gold-line: rgba(203, 171, 104, 0.45);
+  --hair: rgba(246, 246, 244, 0.12);
 }
 
 html, body { overflow-x: hidden; }
@@ -1007,7 +1008,7 @@ main {
   background:
     radial-gradient(circle at 18% 12%, rgba(199,169,107,0.10), transparent 30%),
     radial-gradient(circle at 85% 0%, rgba(199,169,107,0.06), transparent 26%),
-    linear-gradient(160deg, #0b0b0d, #050506 62%);
+    linear-gradient(160deg, #0a0a0a, #000 62%);
 }
 
 /* HERO */
@@ -1247,3 +1248,26 @@ main {
 
 .gameOver h3 { color: var(--gold); }
 .gameOver p { color: var(--muted); }
+
+/* ---- Gati: salto fluido + toque instantáneo en iPhone ---- */
+.gameWrap {
+  touch-action: manipulation;            /* quita el delay y el zoom de doble-tap */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gatiBox {
+  will-change: transform;
+}
+
+/* salto basado en transform (GPU) en lugar de 'bottom' */
+.gatiBox.jump {
+  animation: gatiJumpT 0.65s ease;
+}
+
+@keyframes gatiJumpT {
+  0%   { transform: translateY(0); }
+  45%  { transform: translateY(-130px); }
+  100% { transform: translateY(0); }
+}
