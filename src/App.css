@@ -541,7 +541,7 @@ h1 {
   display: flex;
   align-items: flex-end;
   z-index: 2;
-  animation: skylineMove 12s linear infinite;
+  animation: skylineMove 8s linear infinite;
 }
 
 .skylineSet {
@@ -656,7 +656,7 @@ h1 {
   width: 46px;
   height: 32px;
   z-index: 5;
-  animation: obstacleMove 2.7s linear infinite;
+  animation: obstacleMove 1.7s linear infinite;
 
   background: linear-gradient(
     to bottom,
@@ -834,8 +834,8 @@ h1 {
   inset: 0;
   z-index: 9999;
   background:
-    radial-gradient(circle at 50% 14%, rgba(203,171,104,0.13), transparent 44%),
-    linear-gradient(160deg, #050505, #000 72%);
+    radial-gradient(circle at 50% 13%, rgba(203,176,111,0.12), transparent 46%),
+    linear-gradient(160deg, #0a0b0d, #040405 72%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -916,9 +916,9 @@ h1 {
 .inviteEnvelopeFront {
   position: relative;
   z-index: 3;
-  height: 116px;
-  margin-top: -50px;
-  background: linear-gradient(180deg, #15151a, #0c0c10);
+  height: 150px;
+  margin-top: -46px;
+  background: linear-gradient(180deg, #17181c, #0b0c0f);
   border: 1.5px solid var(--gold);
   box-shadow: 0 26px 60px rgba(0,0,0,0.55);
 }
@@ -947,19 +947,20 @@ h1 {
   .inviteEnvelope { width: 94vw; }
   .invitationPaper { padding: 26px 16px 56px; }
   .inviteSmall { font-size: 13px; }
-  .inviteEnvelopeFront { height: 100px; margin-top: -44px; }
+  .inviteEnvelopeFront { height: 132px; margin-top: -42px; }
 }
 
 /* ============================================================
    DARK PREMIUM THEME + RESPONSIVE  (al final: sobrescribe arriba)
    ============================================================ */
 :root {
-  --ink: #040404;
-  --cream: #f6f6f4;
-  --muted: rgba(246, 246, 244, 0.62);
-  --gold: #cbab68;
-  --gold-line: rgba(203, 171, 104, 0.45);
-  --hair: rgba(246, 246, 244, 0.12);
+  --ink: #050507;
+  --cream: #f4f5f7;
+  --gray: #9aa0a8;
+  --muted: rgba(232, 235, 240, 0.58);
+  --gold: #cbb06f;
+  --gold-line: rgba(203, 176, 111, 0.42);
+  --hair: rgba(236, 239, 244, 0.12);
 }
 
 html, body { overflow-x: hidden; }
@@ -970,15 +971,15 @@ main {
   background:
     radial-gradient(circle at 18% 12%, rgba(199,169,107,0.10), transparent 30%),
     radial-gradient(circle at 85% 0%, rgba(199,169,107,0.06), transparent 26%),
-    linear-gradient(160deg, #0a0a0a, #000 62%);
+    linear-gradient(160deg, #0c0d10, #050506 62%);
 }
 
 /* HERO */
 .hero::before { opacity: 0.05; }
 .initial {
-  color: rgba(203, 171, 104, 0.10);
-  -webkit-text-stroke: 2px rgba(203, 171, 104, 0.55);
-  text-shadow: 0 0 40px rgba(203, 171, 104, 0.18);
+  color: rgba(203, 176, 111, 0.04);
+  -webkit-text-stroke: 1px rgba(203, 176, 111, 0.30);
+  text-shadow: 0 0 50px rgba(203, 176, 111, 0.10);
 }
 .amp { color: var(--gold); }
 .saveCard {
@@ -1230,12 +1231,13 @@ main {
 
 /* salto basado en transform (GPU) en lugar de 'bottom' */
 .gatiBox.jump {
-  animation: gatiJumpT 0.65s ease;
+  animation: gatiJumpT 0.72s ease;
 }
 
 @keyframes gatiJumpT {
   0%   { transform: translateY(0); }
-  45%  { transform: translateY(-130px); }
+  42%  { transform: translateY(-168px); }
+  58%  { transform: translateY(-168px); }
   100% { transform: translateY(0); }
 }
 
@@ -1245,4 +1247,75 @@ main {
   -webkit-user-drag: none;
   user-select: none;
   pointer-events: none;
+}
+
+/* ============================================================
+   GIFTS — mesa de regalos (bonito)
+   ============================================================ */
+.giftsCard {
+  grid-column: 1 / -1;
+  text-align: center;
+  border-color: var(--gold-line);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(203,176,111,0.10), transparent 60%),
+    rgba(255,255,255,0.035);
+}
+
+.giftsLead {
+  max-width: 520px;
+  margin: 6px auto 22px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.giftsOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.giftBtn {
+  display: inline-block;
+  padding: 13px 30px;
+  background: var(--gold);
+  color: #14130f;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-size: 12.5px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  transition: 0.25s ease;
+}
+
+.giftBtn:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+.giftYappy {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 9px 22px;
+  border: 1px solid var(--gold-line);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+}
+
+.giftYappyLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.giftYappyNum {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--cream);
+  letter-spacing: 0.5px;
 }
