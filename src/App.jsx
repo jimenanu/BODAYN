@@ -107,6 +107,37 @@ function GatiGame() {
 }
 
 
+function CollapseSection({ id, className, label, title, children }) {
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const sync = () => {
+      if (window.location.hash === '#' + id) setOpen(true)
+    }
+    sync()
+    window.addEventListener('hashchange', sync)
+    return () => window.removeEventListener('hashchange', sync)
+  }, [id])
+
+  return (
+    <section id={id} className={`${className} collapsible ${open ? 'isOpen' : ''}`}>
+      <button
+        type="button"
+        className="collapseHeader"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+      >
+        <span className="collapseHeadText">
+          {label ? <span className="sectionLabel">{label}</span> : null}
+          <span className="collapseTitle">{title}</span>
+        </span>
+        <span className="collapseIcon" aria-hidden="true">{open ? '\u2013' : '+'}</span>
+      </button>
+      <div className="collapseBody">{children}</div>
+    </section>
+  )
+}
+
 function App() {
   const [entered, setEntered] = useState(false)
 
@@ -186,9 +217,7 @@ function App() {
         </div>
       </section>
 
-      <section id="events" className="section">
-        <p className="sectionLabel">The Celebration</p>
-        <h2>Wedding Weekend</h2>
+      <CollapseSection id="events" className="section" label="The Celebration" title="Wedding Weekend">
 
         <div className="grid">
           <a className="boxButton featured" href="#wedding">
@@ -197,11 +226,9 @@ function App() {
             <p>Ceremony & Reception · Panama City</p>
           </a>
         </div>
-      </section>
+      </CollapseSection>
 
-      <section id="guide" className="section alt">
-        <p className="sectionLabel">Guest Guide</p>
-        <h2>Everything You Need to Know</h2>
+      <CollapseSection id="guide" className="section alt" label="Guest Guide" title="Everything You Need to Know">
 
         <div className="guideGrid">
           <a className="boxButton" href="#stay">
@@ -234,7 +261,7 @@ function App() {
 </a>
         </div>
         
-      </section>
+      </CollapseSection>
 
       <section id="wedding" className="detailSection">
         <p className="sectionLabel">July 11</p>
@@ -287,9 +314,17 @@ function App() {
         </div>
       </section>
 
-<section id="stay" className="detailSection alt">
-  <p className="sectionLabel">Guest Guide</p>
-  <h2>Where to Stay</h2>
+      <section id="game" className="detailSection alt">
+  <p className="sectionLabel">Gati and the Tuna Game</p>
+  <h2>Let's Play</h2>
+  <p className="sectionIntro">
+    Press space or tap the game to jump over the Panama skyline, do not eat the tuna!
+  </p>
+
+  <GatiGame />
+</section>
+
+<CollapseSection id="stay" className="detailSection alt" label="Guest Guide" title="Where to Stay">
 
   <div className="detailGrid">
 
@@ -378,11 +413,9 @@ function App() {
     </div>
 
   </div>
-</section>
+</CollapseSection>
 
-<section id="eat" className="detailSection">
-  <p className="sectionLabel">Guest Guide</p>
-  <h2>Eat</h2>
+<CollapseSection id="eat" className="detailSection" label="Guest Guide" title="Eat">
   <p className="sectionIntro">
     A curated list of favorite restaurants by area, from fine dining to casual lunches.
   </p>
@@ -457,11 +490,9 @@ function App() {
     </div>
 
   </div>
-</section>
+</CollapseSection>
 
-<section id="drinks" className="detailSection alt">
-  <p className="sectionLabel">Guest Guide</p>
-  <h2>Drinks</h2>
+<CollapseSection id="drinks" className="detailSection alt" label="Guest Guide" title="Drinks">
   <p className="sectionIntro">
     Rooftops, cocktail bars and easy spots for a night out.
   </p>
@@ -524,11 +555,9 @@ function App() {
     </div>
 
   </div>
-</section>
+</CollapseSection>
 
-<section id="explore" className="detailSection alt">
-  <p className="sectionLabel">Guest Guide</p>
-  <h2>Explore Panama</h2>
+<CollapseSection id="explore" className="detailSection alt" label="Guest Guide" title="Explore Panama">
 
   <p className="sectionIntro">
     A few of our favorite things to do while you're in Panama City.
@@ -622,11 +651,9 @@ function App() {
     </div>
 
   </div>
-</section>
+</CollapseSection>
 
-<section id="tips" className="detailSection">
-  <p className="sectionLabel">Guest Guide</p>
-  <h2>Travel Tips</h2>
+<CollapseSection id="tips" className="detailSection" label="Guest Guide" title="Travel Tips">
 
   <p className="sectionIntro">
     A few helpful things to know before and during your stay in Panama.
@@ -683,17 +710,9 @@ function App() {
     </div>
 
   </div>
-</section>
+</CollapseSection>
 
-<section id="game" className="detailSection alt">
-  <p className="sectionLabel">Gati and the Tuna Game</p>
-  <h2>Let's Play</h2>
-  <p className="sectionIntro">
-    Press space or tap the game to jump over the Panama skyline, do not eat the tuna!
-  </p>
 
-  <GatiGame />
-</section>
 
 <footer className="footer">
   <p>With love, Rafael & Jimena</p>
