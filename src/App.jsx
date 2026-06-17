@@ -208,7 +208,7 @@ function App() {
 </a>
 
 <a
-  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Rafael+%26+Jimena&dates=20260711T190000/20260711T230000&location=Santuario+Nacional+de+Panama&details=Wedding+Ceremony+of+Rafael+%26+Jimena"
+  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Rafael+%26+Jimena&dates=20260711T190000/20260712T040000&location=Santuario+Nacional+de+Panama&details=Wedding+Ceremony+of+Rafael+%26+Jimena"
   target="_blank"
   rel="noreferrer"
   className="calendarButton"
@@ -313,7 +313,7 @@ function App() {
 
           <div className="detailCard">
   <h3>Reception</h3>
-  <p><strong>Time:</strong> 9:30 PM</p>
+  <p><strong>Time:</strong> 8:30 PM</p>
   <p>Club Unión · Salón Las Perlas</p>
 
   <div className="mapEmbed">
