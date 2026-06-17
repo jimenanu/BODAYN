@@ -1434,3 +1434,83 @@ main {
   0%, 100% { opacity: 0.45; }
   50%      { opacity: 1; }
 }
+
+/* ============================================================
+   ADAPTIVE / ANTI-OVERFLOW  (para iPhones con letra más grande)
+   ============================================================ */
+html {
+  -webkit-text-size-adjust: 100%;   /* Safari no infla el texto y descuadra */
+  text-size-adjust: 100%;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+.pageWrapper,
+main {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* nada se sale del ancho */
+img, iframe, video, svg {
+  max-width: 100%;
+}
+
+/* mapas responsive (ocupan el ancho de la tarjeta, sin cortarse) */
+.mapEmbed {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.mapEmbed iframe {
+  width: 100%;
+  max-width: 100%;
+  height: 220px;
+  display: block;
+  border: 0;
+}
+
+/* títulos y textos largos parten línea en vez de salirse */
+.section h2,
+.detailSection h2,
+.boxButton h3,
+.detailCard h3,
+.guideColumn h3,
+.collapseTitle {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.boxButton p,
+.detailCard p,
+.detailSection p,
+.sectionIntro,
+.giftsLead {
+  overflow-wrap: break-word;
+}
+
+/* nombre de hotel/lugar que escale en pantallas chicas */
+.boxButton h3,
+.detailCard h3 {
+  font-size: clamp(19px, 5.2vw, 25px);
+}
+
+/* tarjetas nunca exceden su contenedor */
+.boxButton,
+.detailCard,
+.tipCard,
+.guideColumn,
+.giftsCard {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* el número de cuenta/Yappy parte línea si hace falta */
+.giftYappyNum {
+  overflow-wrap: anywhere;
+}
