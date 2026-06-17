@@ -827,7 +827,7 @@ h1 {
 
 
 /* ============================================================
-   SPLASH — sobre que se abre y la invitación sale (dark premium)
+   SPLASH — la tarjeta sale de un sobre (sin rotaciones)
    ============================================================ */
 .inviteOverlay {
   position: fixed;
@@ -839,77 +839,36 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 30px 18px;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.inviteEnvelopeScene {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: min(94vw, 600px);
-  height: 800px;
-  transform: translateY(8px);
-}
-
 .inviteEnvelope {
   position: relative;
-  width: 516px;
-  height: 342px;
-}
-
-.inviteEnvelopeBack {
-  position: absolute;
-  inset: 102px 0 0;
-  z-index: 1;
-  background: #101012;
-  border: 1.5px solid #cbab68;
-}
-
-.inviteEnvelopeFront {
-  position: absolute;
-  inset: 102px 0 0;
-  z-index: 4;
-  background: #151517;
-  border: 1.5px solid #cbab68;
-  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
-}
-
-.inviteEnvelopeFlap {
-  position: absolute;
-  top: 102px;
-  left: 0;
-  width: 516px;
-  height: 204px;
-  z-index: 6;
-  background: #1b1b1e;
-  border: 1.5px solid #cbab68;
-  clip-path: polygon(0 0, 50% 78%, 100% 0);
-  transform-origin: top;
-  animation: 1s 0.4s both inviteOpenFlap;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: min(92vw, 470px);
 }
 
 .invitationPaper {
-  position: absolute;
-  top: 120px;
-  left: 31px;
-  z-index: 5;
-  width: 488px;
-  min-height: 560px;
-  padding: 34px 24px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 34px 26px 64px;
   text-align: center;
   background: #ffffff;
-  border: 1px solid #cbab68;
+  border: 1px solid var(--gold);
   box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-  animation: 1.3s 0.9s both invitePullPaper;
+  animation: cardRise 1.5s 0.3s cubic-bezier(0.2, 0.75, 0.2, 1) both;
 }
 
 .invitationPaper:before {
   content: "";
   position: absolute;
   inset: 13px;
-  border: 1px solid rgba(199,169,107,0.55);
+  border: 1px solid rgba(203,171,104,0.55);
   pointer-events: none;
 }
 
@@ -918,7 +877,7 @@ h1 {
   color: #2a2a2a;
   margin: 0 0 20px;
   font-family: Georgia, serif;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -928,7 +887,7 @@ h1 {
   width: 100%;
   height: auto;
   margin: 0 auto;
-  border: 1px solid #1c1a21;
+  border: 1px solid #15140f;
   box-shadow: 0 8px 22px rgba(0,0,0,0.2);
 }
 
@@ -937,12 +896,12 @@ h1 {
   z-index: 20;
   margin-top: 22px;
   padding: 12px 34px;
-  color: #faf7f1;
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 1.4px;
   cursor: pointer;
   background: #14131a;
-  border: 1px solid #c7a96b;
+  border: 1px solid var(--gold);
   border-radius: 999px;
   font-size: 12.5px;
   transition: 0.25s ease;
@@ -950,41 +909,45 @@ h1 {
 
 .invitationPaper button:hover {
   color: #14131a;
-  background: #c7a96b;
+  background: var(--gold);
 }
 
-@keyframes inviteOpenFlap {
-  0% { transform: rotateX(0); }
-  to { transform: rotateX(180deg); }
+/* sobre: bolsillo del que sale la tarjeta */
+.inviteEnvelopeFront {
+  position: relative;
+  z-index: 3;
+  height: 116px;
+  margin-top: -50px;
+  background: linear-gradient(180deg, #15151a, #0c0c10);
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.55);
 }
 
-@keyframes invitePullPaper {
-  0% { transform: translateY(0); }
-  to { transform: translateY(-348px); }
+/* puntita dorada (insinúa la solapa) */
+.inviteEnvelopeFront:before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+@keyframes cardRise {
+  0%   { transform: translateY(80px); opacity: 0; }
+  55%  { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 @media (max-width: 560px) {
-  .inviteOverlay { padding: 10px; }
-  .inviteEnvelopeScene { width: 96vw; height: 640px; }
-  .inviteEnvelope { width: min(94vw, 356px); height: min(62vw, 236px); }
-  .inviteEnvelopeBack,
-  .inviteEnvelopeFront { inset: 17vw 0 0; }
-  .inviteEnvelopeFlap {
-    width: min(94vw, 356px);
-    height: min(31vw, 118px);
-    top: 17vw;
-  }
-  .invitationPaper {
-    width: min(88vw, 340px);
-    left: 5vw;
-    top: 22vw;
-    min-height: 430px;
-    padding: 26px 16px;
-  }
-  @keyframes invitePullPaper {
-    0% { transform: translateY(0); }
-    to { transform: translateY(-300px); }
-  }
+  .inviteOverlay { padding: 20px 12px; }
+  .inviteEnvelope { width: 94vw; }
+  .invitationPaper { padding: 26px 16px 56px; }
+  .inviteSmall { font-size: 13px; }
+  .inviteEnvelopeFront { height: 100px; margin-top: -44px; }
 }
 
 /* ============================================================
