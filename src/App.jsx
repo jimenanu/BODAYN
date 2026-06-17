@@ -238,7 +238,7 @@ function App() {
         </div>
       </CollapseSection>
 
-      <CollapseSection id="guide" className="section alt" label="Guest Guide" title="Everything You Need to Know">
+      <CollapseSection id="guide" className="section alt" label="Traveling from abroad?" title="International Guest Guide">
 
         <div className="guideGrid">
           <a className="boxButton" href="#stay">
@@ -353,7 +353,7 @@ function App() {
   <GatiGame />
 </section>
 
-<CollapseSection id="stay" className="detailSection alt" label="Guest Guide" title="Where to Stay">
+<CollapseSection id="stay" className="detailSection alt" label="International Guide" title="Where to Stay">
 
   <div className="detailGrid">
 
@@ -444,7 +444,7 @@ function App() {
   </div>
 </CollapseSection>
 
-<CollapseSection id="eat" className="detailSection" label="Guest Guide" title="Eat">
+<CollapseSection id="eat" className="detailSection" label="International Guide" title="Eat">
   <p className="sectionIntro">
     A curated list of favorite restaurants by area, from fine dining to casual lunches.
   </p>
@@ -521,7 +521,7 @@ function App() {
   </div>
 </CollapseSection>
 
-<CollapseSection id="drinks" className="detailSection alt" label="Guest Guide" title="Drinks">
+<CollapseSection id="drinks" className="detailSection alt" label="International Guide" title="Drinks">
   <p className="sectionIntro">
     Rooftops, cocktail bars and easy spots for a night out.
   </p>
@@ -586,7 +586,7 @@ function App() {
   </div>
 </CollapseSection>
 
-<CollapseSection id="explore" className="detailSection alt" label="Guest Guide" title="Explore Panama">
+<CollapseSection id="explore" className="detailSection alt" label="International Guide" title="Explore Panama">
 
   <p className="sectionIntro">
     A few of our favorite things to do while you're in Panama City.
@@ -682,7 +682,7 @@ function App() {
   </div>
 </CollapseSection>
 
-<CollapseSection id="tips" className="detailSection" label="Guest Guide" title="Travel Tips">
+<CollapseSection id="tips" className="detailSection" label="International Guide" title="Travel Tips">
 
   <p className="sectionIntro">
     A few helpful things to know before and during your stay in Panama.
