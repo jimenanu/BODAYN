@@ -114,27 +114,19 @@ function App() {
     <>
       {!entered && (
         <div className="inviteOverlay">
-          <div className="inviteEnvelopeScene">
-            <div className="inviteEnvelope">
-              <div className="inviteEnvelopeBack"></div>
-              <div className="invitationPaper">
-                <p className="inviteSmall">
-                  Con amor inmenso, los invitamos a ser parte de nuestra
-                  felicidad. Acompáñanos a nuestra ceremonia en presencia de
-                  Dios.
-                </p>
+          <div className="inviteCard">
+            <p className="inviteSmall">
+              Con amor inmenso, los invitamos a ser parte de nuestra felicidad.
+              Acompáñanos a nuestra ceremonia en presencia de Dios.
+            </p>
 
-                <img
-                  className="inviteImage"
-                  src="/invitacion.jpg"
-                  alt="Invitación de boda de Rafael y Jimena"
-                />
+            <img
+              className="inviteImage"
+              src="/invitacion.jpg"
+              alt="Invitación de boda de Rafael y Jimena"
+            />
 
-                <button onClick={() => setEntered(true)}>Enter</button>
-              </div>
-              <div className="inviteEnvelopeFlap"></div>
-              <div className="inviteEnvelopeFront"></div>
-            </div>
+            <button onClick={() => setEntered(true)}>Enter</button>
           </div>
         </div>
       )}
@@ -191,22 +183,10 @@ function App() {
         <h2>Wedding Weekend</h2>
 
         <div className="grid">
-          <a className="boxButton" href="#welcome">
-            <span>July 10</span>
-            <h3>Welcome Drinks</h3>
-            <p>6:00 PM · Location coming soon</p>
-          </a>
-
           <a className="boxButton featured" href="#wedding">
             <span>July 11</span>
             <h3>Wedding Day</h3>
             <p>Ceremony & Reception · Panama City</p>
-          </a>
-
-          <a className="boxButton" href="#brunch">
-            <span>July 12</span>
-            <h3>Farewell Brunch</h3>
-            <p>2:00 PM · Location coming soon</p>
           </a>
         </div>
       </section>
@@ -298,56 +278,6 @@ function App() {
           </div>
         </div>
       </section>
-
-<section id="welcome" className="detailSection alt">
-  <h2>Welcome Drinks</h2>
-
-  <p className="sectionIntro">
-    Details coming soon.
-  </p>
-
-  <div className="detailGrid">
-    <div className="detailCard">
-      <h3>When</h3>
-      <p>Friday, July 10 · 6:00 PM</p>
-    </div>
-
-    <div className="detailCard">
-      <h3>Where</h3>
-      <p>Panama City</p>
-    </div>
-
-    <div className="detailCard">
-      <h3>Dress Code</h3>
-      <p>Cocktail</p>
-    </div>
-  </div>
-</section>
-
-<section id="brunch" className="detailSection">
-  <h2>Farewell Brunch</h2>
-
-  <p className="sectionIntro">
-    A relaxed send-off to wrap up the weekend together.
-  </p>
-
-  <div className="detailGrid">
-    <div className="detailCard">
-      <h3>When</h3>
-      <p>Sunday, July 12 · 2:00 PM</p>
-    </div>
-
-    <div className="detailCard">
-      <h3>Where</h3>
-      <p>Location coming soon</p>
-    </div>
-
-    <div className="detailCard">
-      <h3>Dress Code</h3>
-      <p>Sunday Relax</p>
-    </div>
-  </div>
-</section>
 
 <section id="stay" className="detailSection alt">
   <p className="sectionLabel">Guest Guide</p>
