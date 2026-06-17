@@ -21,7 +21,7 @@ function GatiGame() {
 
     setTimeout(() => {
       setJumping(false)
-    }, 650)
+    }, 720)
   }
 
   useEffect(() => {
@@ -192,7 +192,7 @@ function App() {
 </a>
 
 <a
-  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Rafael+%26+Jimena&dates=20260711T193000/20260711T230000&location=Santuario+Nacional+de+Panama&details=Wedding+Ceremony+of+Rafael+%26+Jimena"
+  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Rafael+%26+Jimena&dates=20260711T190000/20260711T230000&location=Santuario+Nacional+de+Panama&details=Wedding+Ceremony+of+Rafael+%26+Jimena"
   target="_blank"
   rel="noreferrer"
   className="calendarButton"
@@ -280,7 +280,7 @@ function App() {
         <div className="detailGrid">
 <div className="detailCard">
   <h3>Ceremony</h3>
-  <p><strong>Time:</strong> 7:30 PM</p>
+  <p><strong>Time:</strong> 7:00 PM</p>
   <p>Santuario Nacional de Panamá</p>
 
   <div className="mapEmbed">
@@ -317,9 +317,28 @@ function App() {
             <p>Formal attire</p>
           </div>
 
-          <div className="detailCard">
+          <div className="detailCard giftsCard">
             <h3>Gifts</h3>
-            <p>Your presence is the greatest gift.</p>
+            <p className="giftsLead">
+              Tu presencia es nuestro mayor regalo. Si deseas tener un detalle
+              con nosotros, lo agradecemos de todo corazón.
+            </p>
+
+            <div className="giftsOptions">
+              <a
+                className="giftBtn"
+                href="https://www.amazon.com/hz/wishlist/ls/39K82Z5KXJW0G?ref_=wl_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Amazon Registry
+              </a>
+
+              <div className="giftYappy">
+                <span className="giftYappyLabel">Yappy</span>
+                <span className="giftYappyNum">(+507) 6550-5354</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
