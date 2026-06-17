@@ -327,7 +327,7 @@ function App() {
             <div className="giftsOptions">
               <a
                 className="giftBtn"
-                href="https://www.amazon.com/hz/wishlist/ls/39K82Z5KXJW0G?ref_=wl_share"
+                href="https://www.amazon.com/wedding/share/YEENAVARRO"
                 target="_blank"
                 rel="noopener noreferrer"
               >
