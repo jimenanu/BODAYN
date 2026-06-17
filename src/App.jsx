@@ -154,29 +154,45 @@ function CollapseSection({ id, className, label, title, children }) {
 
 function App() {
   const [entered, setEntered] = useState(false)
+  const [opened, setOpened] = useState(false)
 
   return (
     <>
       {!entered && (
         <div className="inviteOverlay">
-          <div className="inviteEnvelope">
-            <div className="invitationPaper">
-              <p className="inviteSmall">
-                Con amor inmenso, los invitamos a ser parte de nuestra
-                felicidad. Acompáñanos a nuestra ceremonia en presencia de
-                Dios.
-              </p>
+          {!opened ? (
+            <button
+              type="button"
+              className="inviteCover"
+              onClick={() => setOpened(true)}
+              aria-label="Abrir invitación"
+            >
+              <span className="coverLabel">Rafael &amp; Jimena</span>
+              <span className="coverEnvelope">
+                <span className="coverSeal">R&amp;J</span>
+              </span>
+              <span className="coverHint">Toca para abrir</span>
+            </button>
+          ) : (
+            <div className="inviteEnvelope">
+              <div className="invitationPaper">
+                <p className="inviteSmall">
+                  Con amor inmenso, los invitamos a ser parte de nuestra
+                  felicidad. Acompáñanos a nuestra ceremonia en presencia de
+                  Dios.
+                </p>
 
-              <img
-                className="inviteImage"
-                src="/invitacion.jpg"
-                alt="Invitación de boda de Rafael y Jimena"
-              />
+                <img
+                  className="inviteImage"
+                  src="/invitacion.jpg"
+                  alt="Invitación de boda de Rafael y Jimena"
+                />
 
-              <button onClick={() => setEntered(true)}>Enter</button>
+                <button onClick={() => setEntered(true)}>Enter</button>
+              </div>
+              <div className="inviteEnvelopeFront"></div>
             </div>
-            <div className="inviteEnvelopeFront"></div>
-          </div>
+          )}
         </div>
       )}
 
