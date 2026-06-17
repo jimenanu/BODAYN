@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function GatiGame() {
   const [jumping, setJumping] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [score, setScore] = useState(0)
+  const wrapRef = useRef(null)
 
   const jump = () => {
     if (gameOver) {
@@ -33,6 +34,19 @@ function GatiGame() {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [jumping, gameOver])
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+
+    const handleTouch = (e) => {
+      e.preventDefault() // respuesta instantánea + evita zoom/click duplicado en iPhone
+      jump()
+    }
+
+    el.addEventListener('touchstart', handleTouch, { passive: false })
+    return () => el.removeEventListener('touchstart', handleTouch)
   }, [jumping, gameOver])
 
   useEffect(() => {
@@ -66,7 +80,7 @@ function GatiGame() {
   }, [gameOver])
 
   return (
-    <div className={`gameWrap ${gameOver ? 'paused' : ''}`} onClick={jump}>
+    <div ref={wrapRef} className={`gameWrap ${gameOver ? 'paused' : ''}`} onClick={jump}>
       <div className="score">Score: {score}</div>
 
       {gameOver && (
