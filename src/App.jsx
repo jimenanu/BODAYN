@@ -354,6 +354,11 @@ function App() {
                 <span className="giftYappyLabel">Yappy</span>
                 <span className="giftYappyNum">(+507) 6550-5354</span>
               </div>
+
+              <div className="giftYappy">
+                <span className="giftYappyLabel">Banco General · Ahorros</span>
+                <span className="giftYappyNum">04-05-99-037494-3</span>
+              </div>
             </div>
           </div>
         </div>
