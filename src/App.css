@@ -1,756 +1,1351 @@
-import { useEffect, useRef, useState } from 'react'
-import './App.css'
+* {
+  box-sizing: border-box;
+}
 
-function GatiGame() {
-  const [jumping, setJumping] = useState(false)
-  const [gameOver, setGameOver] = useState(false)
-  const [score, setScore] = useState(0)
-  const wrapRef = useRef(null)
+html {
+  scroll-behavior: smooth;
+}
 
-  const jump = () => {
-    if (gameOver) {
-      setGameOver(false)
-      setScore(0)
-      return
-    }
+body {
+  margin: 0;
+  color: #050505;
+  background: #f6f4ef;
+  font-family: Helvetica, Arial, sans-serif;
+}
 
-    if (jumping) return
+/* PAPER BACKGROUND */
+main {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,0,0,0.04), transparent 25%),
+    radial-gradient(circle at 80% 10%, rgba(0,0,0,0.035), transparent 22%),
+    linear-gradient(120deg, rgba(255,255,255,0.9), rgba(236,232,224,0.75)),
+    #f6f4ef;
+}
 
-    setJumping(true)
-    setScore((prev) => prev + 1)
+/* HERO */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
 
-    setTimeout(() => {
-      setJumping(false)
-    }, 720)
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(45deg, transparent 48%, rgba(0,0,0,0.05) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(0,0,0,0.04) 50%, transparent 52%);
+  background-size: 70px 70px;
+}
+
+.initial {
+  position: absolute;
+  font-family: Georgia, serif;
+  font-size: clamp(220px, 42vw, 620px);
+  line-height: 1;
+  color: #000;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.initialLeft {
+  left: -110px;
+  bottom: 14%;
+}
+
+.initialRight {
+  right: -70px;
+  bottom: 8%;
+}
+
+.saveCard {
+  position: relative;
+  z-index: 2;
+  width: min(92vw, 560px);
+  padding: 44px 28px;
+  background: rgba(246, 244, 239, 0.76);
+  backdrop-filter: blur(2px);
+}
+
+.topText,
+.smallCaps,
+.sectionLabel {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 16px;
+  color: #050505;
+  margin: 0;
+}
+
+.topText {
+  margin-bottom: 90px;
+  font-size: 20px;
+}
+
+.smallCaps {
+  margin-top: 22px;
+}
+
+.line {
+  width: 210px;
+  height: 2px;
+  background: #050505;
+  margin: 0 auto 24px;
+}
+
+h1 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(42px, 8vw, 68px);
+  line-height: 1;
+  margin: 18px 0;
+  color: #050505;
+  font-weight: 700;
+}
+
+.amp {
+  font-family: Georgia, serif;
+  font-size: 52px;
+  line-height: 1;
+  margin: 8px 0;
+  color: #050505;
+}
+
+.date {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 22px;
+  margin: 20px 0 24px;
+  color: #050505;
+}
+
+.intro {
+  color: #111;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 28px auto 22px;
+}
+
+/* BUTTONS */
+.heroButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.heroButtons a,
+.detailCard a {
+  text-decoration: none;
+  background: #050505;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+/* SECTIONS */
+.section,
+.detailSection {
+  padding: 90px 24px;
+  text-align: center;
+}
+
+.section h2,
+.detailSection h2 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1.05;
+  margin: 18px 0 38px;
+  color: #050505;
+}
+
+.alt {
+  background: rgba(255,255,255,0.42);
+}
+
+/* BOX BUTTONS */
+.grid,
+.guideGrid,
+.detailGrid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  gap: 22px;
+}
+
+.grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.guideGrid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.detailGrid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.boxButton,
+.detailCard {
+  background: rgba(255,255,255,0.72);
+  border: 1.5px solid #050505;
+  color: #050505;
+  text-decoration: none;
+  padding: 28px;
+  min-height: 180px;
+  text-align: left;
+  transition: 0.25s ease;
+}
+
+.boxButton:hover {
+  transform: translateY(-5px);
+  background: #050505;
+  color: white;
+}
+
+.boxButton span {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.boxButton h3,
+.detailCard h3 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: 25px;
+  margin: 18px 0 12px;
+  color: inherit;
+}
+
+.boxButton p,
+.detailCard p,
+.detailSection p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: inherit;
+}
+
+.featured {
+  background: #050505;
+  color: white;
+}
+
+.detailCard {
+  min-height: auto;
+}
+
+.detailCard a {
+  margin-top: 8px;
+}
+
+/* MOBILE */
+@media (max-width: 850px) {
+  .grid,
+  .guideGrid,
+  .detailGrid {
+    grid-template-columns: 1fr;
   }
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code === 'Space') {
-        e.preventDefault()
-        jump()
-      }
-    }
+  .initial {
+    font-size: 260px;
+  }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [jumping, gameOver])
+  .initialLeft {
+    left: -90px;
+    bottom: 22%;
+  }
 
-  useEffect(() => {
-    const el = wrapRef.current
-    if (!el) return
+  .initialRight {
+    right: -55px;
+    bottom: 18%;
+  }
 
-    const handleTouch = (e) => {
-      e.preventDefault() // respuesta instantánea + evita zoom/click duplicado en iPhone
-      jump()
-    }
+  .topText {
+    margin-bottom: 70px;
+  }
 
-    el.addEventListener('touchstart', handleTouch, { passive: false })
-    return () => el.removeEventListener('touchstart', handleTouch)
-  }, [jumping, gameOver])
+  .saveCard {
+    padding: 38px 22px;
+  }
+}
 
-  useEffect(() => {
-    if (gameOver) return
+.foodGrid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  text-align: left;
+}
 
-    const collisionTimer = setInterval(() => {
-      const gati = document.querySelector('.gatiBox')
-      const obstacle = document.querySelector('.obstacle')
+.foodColumn h3 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
 
-      if (!gati || !obstacle) return
+.foodColumn a {
+  display: block;
+  text-decoration: none;
+  color: #050505;
+  margin-bottom: 10px;
+  font-size: 15px;
+  transition: 0.2s;
+}
 
-      const gatiRect = gati.getBoundingClientRect()
-      const obstacleRect = obstacle.getBoundingClientRect()
+.foodColumn a:hover {
+  opacity: 0.6;
+  transform: translateX(4px);
+}
 
-      const collision =
-        gatiRect.right > obstacleRect.left + 10 &&
-        gatiRect.left < obstacleRect.right - 10 &&
-        gatiRect.bottom > obstacleRect.top + 10
+/* MOBILE */
+@media (max-width: 850px) {
+  .foodGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
 
-      if (collision) {
-        setGameOver(true)
+.sectionIntro {
+  max-width: 680px;
+  margin: -18px auto 42px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1a1a1a;
+}
 
-        setTimeout(() => {
-          setGameOver(false)
-          setScore(0)
-        }, 1300)
-      }
-    }, 40)
+.guideListGrid {
+  max-width: 1180px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  text-align: left;
+}
 
-    return () => clearInterval(collisionTimer)
-  }, [gameOver])
+.guideColumn {
+  border: 1.5px solid #050505;
+  background: rgba(255, 255, 255, 0.62);
+  padding: 26px;
+  min-height: 360px;
+}
 
-  return (
-    <div ref={wrapRef} className={`gameWrap ${gameOver ? 'paused' : ''}`} onClick={jump}>
-      <div className="score">Score: {score}</div>
+.guideColumn h3 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: 22px;
+  margin: 0 0 22px;
+  color: #050505;
+}
 
-      {gameOver && (
-        <div className="gameOver">
-          <h3>Game Over 🐟</h3>
-          <p>Tap or press space to restart</p>
-        </div>
-      )}
+.guideColumn a {
+  display: block;
+  text-decoration: none;
+  color: #050505;
+  border-top: 1px solid rgba(0, 0, 0, 0.18);
+  padding: 14px 0;
+  transition: 0.2s ease;
+}
 
-      <div className={`gatiBox ${jumping ? 'jump' : ''}`}>
-        <img src={gameOver ? '/gati-sad.png' : '/gati.png'} alt="Gati" />
-      </div>
+.guideColumn a:hover {
+  transform: translateX(4px);
+  opacity: 0.65;
+}
 
-      <div className="obstacle"></div>
+.guideColumn span {
+  display: block;
+  font-weight: 700;
+  font-size: 16px;
+}
 
-      <div className="panamaSkyline">
-        {[1, 2, 3].map((set) => (
-          <div className="skylineSet" key={set}>
-            <div className="building ocean"></div>
-            <div className="building towerOne"></div>
-            <div className="building skinny"></div>
-            <div className="building screw"></div>
-            <div className="building sail"></div>
-            <div className="building curve"></div>
-            <div className="building towerTwo"></div>
-            <div className="building short"></div>
-            <div className="building needle"></div>
-            <div className="building towerOne"></div>
-            <div className="building screw"></div>
-            <div className="building sail"></div>
-            <div className="building curve"></div>
-            <div className="building skinny"></div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+.guideColumn small {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: #444;
+}
+
+@media (max-width: 1000px) {
+  .guideListGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .guideListGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tipsGrid {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: left;
+}
+
+.tipCard {
+  border: 1.5px solid #050505;
+  padding: 22px;
+  background: rgba(255,255,255,0.65);
+}
+
+.tipCard h3 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.tipCard p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 6px 0;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .tipsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .tipsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* GUIDE BUTTONS: 3 PER ROW */
+.guideGrid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* GATI GAME */
+.gameWrap {
+  position: relative;
+  max-width: 1000px;
+  height: 360px;
+  margin: 40px auto 0;
+  border: 1.5px solid #050505;
+  background:
+    linear-gradient(to bottom, #fbfaf7 0%, #fbfaf7 58%, #f0eee8 58%, #f0eee8 100%);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.score {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  z-index: 5;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gatiBox {
+  position: absolute;
+  left: 80px;
+  bottom: 62px;
+  width: 95px;
+  z-index: 6;
+}
+
+.gatiBox img {
+  width: 100%;
+  display: block;
+}
+
+.gatiBox.jump {
+  animation: gatiJump 0.65s ease;
+}
+
+@keyframes gatiJump {
+  0% { bottom: 62px; }
+  45% { bottom: 190px; }
+  100% { bottom: 62px; }
+}
+
+/* GATI GAME */
+.gameWrap {
+  position: relative;
+  max-width: 1000px;
+  height: 360px;
+  margin: 40px auto 0;
+  border: 1.5px solid #050505;
+  background:
+    linear-gradient(to bottom, #fbfaf7 0%, #fbfaf7 58%, #f0eee8 58%, #f0eee8 100%);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.score {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  z-index: 5;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gatiBox {
+  position: absolute;
+  left: 80px;
+  bottom: 62px;
+  width: 95px;
+  z-index: 6;
+}
+
+.gatiBox img {
+  width: 100%;
+  display: block;
+}
+
+.gatiBox.jump {
+  animation: gatiJump 0.65s ease;
+}
+
+@keyframes gatiJump {
+  0% { bottom: 62px; }
+  45% { bottom: 190px; }
+  100% { bottom: 62px; }
+}
+
+/* Panama-ish skyline */
+.panamaSkyline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: max-content;
+  height: 230px;
+  display: flex;
+  align-items: flex-end;
+  z-index: 2;
+  animation: skylineMove 8s linear infinite;
+}
+
+.skylineSet {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 820px;
+  padding-left: 30px;
+}
+
+.building {
+  position: relative;
+  width: 58px;
+  height: 180px;
+  background: #050505;
+  opacity: 0.96;
+  flex-shrink: 0;
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+}
+
+/* little windows */
+.building::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 12px;
+  width: 7px;
+  height: 7px;
+  background: rgba(255,255,255,0.5);
+  box-shadow:
+    18px 0 rgba(255,255,255,0.5),
+    0 22px rgba(255,255,255,0.4),
+    18px 22px rgba(255,255,255,0.4),
+    0 44px rgba(255,255,255,0.35),
+    18px 44px rgba(255,255,255,0.35),
+    0 66px rgba(255,255,255,0.3),
+    18px 66px rgba(255,255,255,0.3),
+    0 88px rgba(255,255,255,0.25),
+    18px 88px rgba(255,255,255,0.25),
+    0 110px rgba(255,255,255,0.22),
+    18px 110px rgba(255,255,255,0.22);
+}
+
+.short {
+  width: 62px;
+  height: 120px;
+}
+
+.skinny {
+  width: 34px;
+  height: 205px;
+}
+
+.needle {
+  width: 26px;
+  height: 230px;
+}
+
+.towerOne {
+  width: 58px;
+  height: 170px;
+}
+
+.towerTwo {
+  width: 66px;
+  height: 215px;
+}
+
+.ocean {
+  width: 85px;
+  height: 80px;
+  border-radius: 12px 12px 0 0;
+}
+
+.sail,
+.curve,
+.screw {
+  width: 56px;
+  height: 190px;
+  background: #050505;
+  border-radius: 3px 3px 0 0;
+  clip-path: none;
+  transform: none;
+}
+
+.sail {
+  height: 210px;
+}
+
+.curve {
+  height: 160px;
+}
+
+.screw {
+  width: 48px;
+  height: 200px;
+}
+
+@keyframes skylineMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-820px); }
 }
 
 
-function CollapseSection({ id, className, label, title, children }) {
-  const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    const sync = () => {
-      if (window.location.hash === '#' + id) setOpen(true)
-    }
-    sync()
-    window.addEventListener('hashchange', sync)
-    return () => window.removeEventListener('hashchange', sync)
-  }, [id])
+/* OBSTACLE */
+.obstacle {
+  position: absolute;
+  bottom: 48px;
+  right: -60px;
+  width: 46px;
+  height: 32px;
+  z-index: 5;
+  animation: obstacleMove 1.7s linear infinite;
 
-  return (
-    <section id={id} className={`${className} collapsible ${open ? 'isOpen' : ''}`}>
-      <button
-        type="button"
-        className="collapseHeader"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-      >
-        <span className="collapseHeadText">
-          {label ? <span className="sectionLabel">{label}</span> : null}
-          <span className="collapseTitle">{title}</span>
-        </span>
-        <span className="collapseIcon" aria-hidden="true">{open ? '\u2013' : '+'}</span>
-      </button>
-      <div className="collapseBody">{children}</div>
-    </section>
-  )
+  background: linear-gradient(
+    to bottom,
+    #d9d9d9 0%,
+    #f2f2f2 20%,
+    #d9d9d9 50%,
+    #cfcfcf 100%
+  );
+
+  border-radius: 6px;
+  border: 2px solid #999;
 }
 
-function App() {
-  const [entered, setEntered] = useState(false)
-
-  return (
-    <>
-      {!entered && (
-        <div className="inviteOverlay">
-          <div className="inviteEnvelope">
-            <div className="invitationPaper">
-              <p className="inviteSmall">
-                Con amor inmenso, los invitamos a ser parte de nuestra
-                felicidad. Acompáñanos a nuestra ceremonia en presencia de
-                Dios.
-              </p>
-
-              <img
-                className="inviteImage"
-                src="/invitacion.jpg"
-                alt="Invitación de boda de Rafael y Jimena"
-              />
-
-              <button onClick={() => setEntered(true)}>Enter</button>
-            </div>
-            <div className="inviteEnvelopeFront"></div>
-          </div>
-        </div>
-      )}
-
-      <div className="pageWrapper">
-  <main>
-      <a
-  href="https://forms.gle/Sjww1UcEo9ob4oCY7"
-  target="_blank"
-  rel="noreferrer"
-  className="rsvpButton"
->
-  RSVP
-</a>
-
-<a
-  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Rafael+%26+Jimena&dates=20260711T190000/20260711T230000&location=Santuario+Nacional+de+Panama&details=Wedding+Ceremony+of+Rafael+%26+Jimena"
-  target="_blank"
-  rel="noreferrer"
-  className="calendarButton"
->
-  Add to Calendar
-</a>
-      <section className="hero">
-        <div className="initial initialLeft">R</div>
-        <div className="initial initialRight">J</div>
-
-        <div className="saveCard">
-          <p className="topText">Faith. Hope. Love. Above all, love.</p>
-
-          <div className="line"></div>
-
-          <p className="smallCaps">For the wedding of</p>
-          <h1>Rafael</h1>
-          <p className="amp">&</p>
-          <h1>Jimena</h1>
-          <p className="date">Jul 11, 2026</p>
-
-          <div className="line"></div>
-
-          <p className="intro">
-            A guide for our favorite people.
-          </p>
-
-          <div className="heroButtons">
-            <a href="#events">View Events</a>
-            <a href="#guide">Guest Guide</a>
-          </div>
-        </div>
-      </section>
-
-      <CollapseSection id="events" className="section" label="The Celebration" title="Wedding Weekend">
-
-        <div className="grid">
-          <a className="boxButton featured" href="#wedding">
-            <span>July 11</span>
-            <h3>Wedding Day</h3>
-            <p>Ceremony & Reception · Panama City</p>
-          </a>
-        </div>
-      </CollapseSection>
-
-      <CollapseSection id="guide" className="section alt" label="Traveling from abroad?" title="International Guest Guide">
-
-        <div className="guideGrid">
-          <a className="boxButton" href="#stay">
-            <h3>Where to Stay</h3>
-            <p>Hotels in Casco Viejo, Punta Pacífica, Obarrio and Costa del Este.</p>
-          </a>
-
-          <a className="boxButton" href="#eat">
-  <h3>Eat</h3>
-  <p>Fine dining, casual spots, brunch and local favorites.</p>
-</a>
-
-<a className="boxButton" href="#drinks">
-  <h3>Drinks</h3>
-  <p>Rooftops, cocktail bars and places for a night out.</p>
-</a>
-
-          <a className="boxButton" href="#explore">
-            <h3>Explore Panama</h3>
-            <p>Canal, Casco Viejo, Amador, Taboga, San Blas and more.</p>
-          </a>
-
-          <a className="boxButton" href="#tips">
-            <h3>Travel Tips</h3>
-            <p>Weather, Uber, currency, packing notes and useful contacts.</p>
-          </a>
-          <a className="boxButton" href="#game">
-  <h3>Gati Game</h3>
-  <p>A tiny Panama skyline game starring our owner.</p>
-</a>
-        </div>
-        
-      </CollapseSection>
-
-      <section id="wedding" className="detailSection">
-        <p className="sectionLabel">July 11</p>
-        <h2>Wedding Day Details</h2>
-
-        <div className="detailGrid">
-<div className="detailCard">
-  <h3>Ceremony</h3>
-  <p><strong>Time:</strong> 7:00 PM</p>
-  <p>Santuario Nacional de Panamá</p>
-
-  <div className="mapEmbed">
-    <iframe
-      src="https://www.google.com/maps?q=Santuario+Nacional+de+Panama&output=embed"
-      loading="lazy"
-    ></iframe>
-  </div>
-
-  <a href="https://maps.app.goo.gl/PGiRdjwXgWZWtW1r6" target="_blank">
-    Open in Maps
-  </a>
-</div>
-
-          <div className="detailCard">
-  <h3>Reception</h3>
-  <p><strong>Time:</strong> 9:30 PM</p>
-  <p>Club Unión · Salón Las Perlas</p>
-
-  <div className="mapEmbed">
-    <iframe
-      src="https://www.google.com/maps?q=Club+Union+Panama&output=embed"
-      loading="lazy"
-    ></iframe>
-  </div>
-
-  <a href="https://maps.app.goo.gl/3wp2zkvhHMqMfQiz9" target="_blank">
-    Open in Maps
-  </a>
-</div>
-
-          <div className="detailCard">
-            <h3>Dress Code</h3>
-            <p>Formal attire</p>
-          </div>
-
-          <div className="detailCard giftsCard">
-            <h3>Gifts</h3>
-            <p className="giftsLead">
-              Tu presencia es nuestro mayor regalo. Si deseas tener un detalle
-              con nosotros, lo agradecemos de todo corazón.
-            </p>
-
-            <div className="giftsOptions">
-              <a
-                className="giftBtn"
-                href="https://www.amazon.com/hz/wishlist/ls/39K82Z5KXJW0G?ref_=wl_share"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Amazon Registry
-              </a>
-
-              <div className="giftYappy">
-                <span className="giftYappyLabel">Yappy</span>
-                <span className="giftYappyNum">(+507) 6550-5354</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="game" className="detailSection alt">
-  <p className="sectionLabel">Gati and the Tuna Game</p>
-  <h2>Let's Play</h2>
-  <p className="sectionIntro">
-    Press space or tap the game to jump over the Panama skyline, do not eat the tuna!
-  </p>
-
-  <GatiGame />
-</section>
-
-<CollapseSection id="stay" className="detailSection alt" label="International Guide" title="Where to Stay">
-
-  <div className="detailGrid">
-
-    <div className="detailCard">
-      <h3>JW Marriott (Punta Pacífica)</h3>
-      <p>Luxury · Ocean views · Iconic tower</p>
-      <p><strong>Approx:</strong> $250 – $450 / night</p>
-
-      <div className="mapEmbed">
-        <iframe src="https://www.google.com/maps?q=JW+Marriott+Panama&output=embed"></iframe>
-      </div>
-
-      <a href="https://maps.app.goo.gl/9gY8q8qM9Jz7cQe59" target="_blank">
-        Open in Maps
-      </a>
-    </div>
-
-    <div className="detailCard">
-      <h3>Residence Inn by Marriott (Pacific Center)</h3>
-      <p>Modern · Walkable · Great location</p>
-      <p><strong>Approx:</strong> $140 – $260 / night</p>
-
-      <div className="mapEmbed">
-        <iframe src="https://www.google.com/maps?q=Residence+Inn+Panama+City+Panama&output=embed"></iframe>
-      </div>
-
-      <a href="https://maps.app.goo.gl/3KXvJ3uXy4ZkVY6d8" target="_blank">
-        Open in Maps
-      </a>
-    </div>
-
-    <div className="detailCard">
-      <h3>Plaza Paitilla Inn</h3>
-      <p>Great value · Ocean view · Central</p>
-      <p><strong>Approx:</strong> $90 – $160 / night</p>
-
-      <div className="mapEmbed">
-        <iframe src="https://www.google.com/maps?q=Plaza+Paitilla+Inn&output=embed"></iframe>
-      </div>
-
-      <a href="https://maps.app.goo.gl/Wq6v6i6m7vV3W9zK8" target="_blank">
-        Open in Maps
-      </a>
-    </div>
-
-    <div className="detailCard">
-      <h3>Riu Plaza Panamá</h3>
-      <p>Central · Social · Lively</p>
-      <p><strong>Approx:</strong> $110 – $200 / night</p>
-
-      <div className="mapEmbed">
-        <iframe src="https://www.google.com/maps?q=Riu+Plaza+Panama&output=embed"></iframe>
-      </div>
-
-      <a href="https://maps.app.goo.gl/G5V7y9FvJg1c3QYp9" target="_blank">
-        Open in Maps
-      </a>
-    </div>
-
-    <div className="detailCard">
-      <h3>Intercontinental Miramar</h3>
-      <p>Waterfront · Classic · Balboa Ave</p>
-      <p><strong>Approx:</strong> $180 – $320 / night</p>
-
-      <div className="mapEmbed">
-        <iframe src="https://www.google.com/maps?q=Intercontinental+Miramar+Panama&output=embed"></iframe>
-      </div>
-
-      <a href="https://maps.app.goo.gl/9o3nPp2dP8Y8j8rX8" target="_blank">
-        Open in Maps
-      </a>
-    </div>
-
-    <div className="detailCard">
-      <h3>Hilton Panamá (Av. Balboa)</h3>
-      <p>Oceanfront · Casino · Great location</p>
-      <p><strong>Approx:</strong> $160 – $300 / night</p>
-
-      <div className="mapEmbed">
-        <iframe src="https://www.google.com/maps?q=Hilton+Panama+Balboa+Avenue&output=embed"></iframe>
-      </div>
-
-      <a href="https://maps.app.goo.gl/qX4nXk8kHjF6rFhF6" target="_blank">
-        Open in Maps
-      </a>
-    </div>
-
-  </div>
-</CollapseSection>
-
-<CollapseSection id="eat" className="detailSection" label="International Guide" title="Eat">
-  <p className="sectionIntro">
-    A curated list of favorite restaurants by area, from fine dining to casual lunches.
-  </p>
-
-  <div className="guideListGrid">
-
-    <div className="guideColumn">
-      <h3>Costa del Este</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Azahar+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>Azahar</span><small>Fine dining · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Brutto+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>Brutto</span><small>Modern dining</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Segundo+Muelle+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>Segundo Muelle</span><small>Seafood / Peruvian</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Nacion+Sushi+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>Nación Sushi</span><small>Casual</small>
-      </a>
-    </div>
-
-    <div className="guideColumn">
-      <h3>San Francisco</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Maito+Panama" target="_blank" rel="noreferrer">
-        <span>Maito</span><small>Fine dining · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Makoto+Panama" target="_blank" rel="noreferrer">
-        <span>Makoto</span><small>Japanese · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Casa+Escondida+Panama" target="_blank" rel="noreferrer">
-        <span>Casa Escondida</span><small>Casual / cozy</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Tacos+La+Neta+Panama" target="_blank" rel="noreferrer">
-        <span>Tacos La Neta</span><small>Casual</small>
-      </a>
-    </div>
-
-    <div className="guideColumn">
-      <h3>Bella Vista / Obarrio</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Fonda+Lo+Que+Hay+Panama" target="_blank" rel="noreferrer">
-        <span>Fonda Lo Que Hay</span><small>Panamanian · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=La+Vespa+Panama" target="_blank" rel="noreferrer">
-        <span>La Vespa</span><small>Italian</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Filomena+Panama" target="_blank" rel="noreferrer">
-        <span>Filomena</span><small>Italian / dinner</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Mahalo+Cocina+y+Jardin+Panama" target="_blank" rel="noreferrer">
-        <span>Mahalo</span><small>Brunch / casual</small>
-      </a>
-    </div>
-
-    <div className="guideColumn">
-      <h3>Casco Viejo</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Donde+Jose+Panama" target="_blank" rel="noreferrer">
-        <span>Donde José</span><small>Tasting menu · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Santa+Rita+Casco+Viejo+Panama" target="_blank" rel="noreferrer">
-        <span>Santa Rita</span><small>Dinner</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Mahalo+Casco+Viejo+Panama" target="_blank" rel="noreferrer">
-        <span>Mahalo Casco</span><small>Brunch / lunch</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Caliope+Steakhouse+Panama" target="_blank" rel="noreferrer">
-        <span>Caliope</span><small>Steakhouse / dinner</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=CasaCasco+Panama" target="_blank" rel="noreferrer">
-        <span>CasaCasco</span><small>Group friendly</small>
-      </a>
-    </div>
-
-  </div>
-</CollapseSection>
-
-<CollapseSection id="drinks" className="detailSection alt" label="International Guide" title="Drinks">
-  <p className="sectionIntro">
-    Rooftops, cocktail bars and easy spots for a night out.
-  </p>
-
-  <div className="guideListGrid">
-
-    <div className="guideColumn">
-      <h3>Costa del Este</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Brutto+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>Brutto</span><small>Cocktails / dinner</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Azahar+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>Azahar</span><small>Drinks + dinner · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=La+Fabrica+Costa+del+Este+Panama" target="_blank" rel="noreferrer">
-        <span>La Fábrica</span><small>Casual drinks</small>
-      </a>
-    </div>
-
-    <div className="guideColumn">
-      <h3>San Francisco</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Pedro+Mandinga+Panama" target="_blank" rel="noreferrer">
-        <span>Pedro Mandinga</span><small>Rum bar · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Casa+Escondida+Panama" target="_blank" rel="noreferrer">
-        <span>Casa Escondida</span><small>Casual drinks</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=La+Tana+Panama" target="_blank" rel="noreferrer">
-        <span>La Tana</span><small>Wine / small plates</small>
-      </a>
-    </div>
-
-    <div className="guideColumn">
-      <h3>Bella Vista / Obarrio</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Azahar+Panama+Obarrio" target="_blank" rel="noreferrer">
-        <span>Azahar</span><small>Rooftop-style dinner</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=La+Vespa+Panama" target="_blank" rel="noreferrer">
-        <span>La Vespa</span><small>Elegant dinner + drinks</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Filomena+Panama" target="_blank" rel="noreferrer">
-        <span>Filomena</span><small>Pretty cocktails</small>
-      </a>
-    </div>
-
-    <div className="guideColumn">
-      <h3>Casco Viejo</h3>
-      <a href="https://www.google.com/maps/search/?api=1&query=Tantalo+Rooftop+Panama" target="_blank" rel="noreferrer">
-        <span>Tántalo Rooftop</span><small>Rooftop · Featured</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=CasaCasco+Rooftop+Panama" target="_blank" rel="noreferrer">
-        <span>CasaCasco Rooftop</span><small>Rooftop / group friendly</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Selina+Rooftop+Casco+Viejo+Panama" target="_blank" rel="noreferrer">
-        <span>Selina Rooftop</span><small>Casual rooftop</small>
-      </a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Salvaje+Panama+Casco+Viejo" target="_blank" rel="noreferrer">
-        <span>Salvaje</span><small>Dinner + nightlife</small>
-      </a>
-    </div>
-
-  </div>
-</CollapseSection>
-
-<CollapseSection id="explore" className="detailSection alt" label="International Guide" title="Explore Panama">
-
-  <p className="sectionIntro">
-    A few of our favorite things to do while you're in Panama City.
-  </p>
-
-  <div className="guideListGrid">
-
-    {/* ICONIC */}
-    <div className="guideColumn">
-      <h3>Must See</h3>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d300875-Reviews-Panama_Canal-Panama_City_Panama_Province.html" target="_blank">
-        <span>Panama Canal</span>
-        <small>Iconic · Visitor Center · Featured</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d307611-Reviews-Casco_Viejo-Panama_City_Panama_Province.html" target="_blank">
-        <span>Casco Viejo</span>
-        <small>Historic district · Walk, eat & drink</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d309461-Reviews-Amador_Causeway-Panama_City_Panama_Province.html" target="_blank">
-        <span>Amador Causeway</span>
-        <small>Views · Bike · Sunset</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d3752386-Reviews-Biomuseo-Panama_City_Panama_Province.html" target="_blank">
-        <span>Biomuseo</span>
-        <small>Frank Gehry · Architecture + nature</small>
-      </a>
-    </div>
-
-    {/* DAY TRIPS */}
-    <div className="guideColumn">
-      <h3>Day Trips</h3>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g303530-d310239-Reviews-San_Blas_Islands-Guna_Yala_Region.html" target="_blank">
-        <span>San Blas Islands</span>
-        <small>Crystal clear water · Full day · Featured</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g303530-d308610-Reviews-Taboga_Island-Panama_Province.html" target="_blank">
-        <span>Taboga Island</span>
-        <small>Beach escape · 30 min ferry</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g298424-d308744-Reviews-Gamboa_Rainforest-Panama_Province.html" target="_blank">
-        <span>Gamboa Rainforest</span>
-        <small>Nature · Monkeys · Canal views</small>
-      </a>
-    </div>
-
-    {/* EXPERIENCES */}
-    <div className="guideColumn">
-      <h3>Experiences</h3>
-
-      <a href="https://www.tripadvisor.com/AttractionProductReview-g294480-d11447283-Panama_Canal_Partial_Transit_Tour-Panama_City_Panama_Province.html" target="_blank">
-        <span>Canal Boat Tour</span>
-        <small>Transit experience · Featured</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/AttractionProductReview-g294480-d11447821-Monkey_Island_Tour-Panama_City_Panama_Province.html" target="_blank">
-        <span>Monkey Island Tour</span>
-        <small>Fun · Wildlife · Boat ride</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/AttractionProductReview-g294480-d11448437-Panama_City_Food_Tour-Panama_City_Panama_Province.html" target="_blank">
-        <span>Food Tour</span>
-        <small>Local flavors · Walking tour</small>
-      </a>
-    </div>
-
-    {/* SHOPPING / EXTRA */}
-    <div className="guideColumn">
-      <h3>Shopping & More</h3>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d298132-Reviews-Multiplaza_Pacific_Mall-Panama_City_Panama_Province.html" target="_blank">
-        <span>Multiplaza Mall</span>
-        <small>Luxury shopping</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d298140-Reviews-Albrook_Mall-Panama_City_Panama_Province.html" target="_blank">
-        <span>Albrook Mall</span>
-        <small>Huge mall · Everything</small>
-      </a>
-
-      <a href="https://www.tripadvisor.com/Attraction_Review-g294480-d298128-Reviews-Cinta_Costera-Panama_City_Panama_Province.html" target="_blank">
-        <span>Cinta Costera</span>
-        <small>Walk · Jog · Ocean views</small>
-      </a>
-    </div>
-
-  </div>
-</CollapseSection>
-
-<CollapseSection id="tips" className="detailSection" label="International Guide" title="Travel Tips">
-
-  <p className="sectionIntro">
-    A few helpful things to know before and during your stay in Panama.
-  </p>
-
-  <div className="tipsGrid">
-
-    <div className="tipCard">
-      <h3>Getting Around</h3>
-      <p>Uber is the easiest and most reliable way to move around the city.</p>
-      <p>Taxis are also available but usually cash only.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>Currency</h3>
-      <p>Panama uses the US Dollar (USD).</p>
-      <p>Credit cards are widely accepted.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>Weather</h3>
-      <p>Warm and humid year-round (75–90°F).</p>
-      <p>Light clothing recommended + occasional rain.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>What to Wear</h3>
-      <p>Day: light, breathable outfits.</p>
-      <p>Night: smart casual / dressy for dinners.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>Safety</h3>
-      <p>Panama City is generally safe.</p>
-      <p>Use common sense and Uber at night.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>Language</h3>
-      <p>Spanish is the main language.</p>
-      <p>English is widely spoken in restaurants and hotels.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>Electricity</h3>
-      <p>Same as the US (110V).</p>
-      <p>No adapter needed for US plugs.</p>
-    </div>
-
-    <div className="tipCard">
-      <h3>Contact</h3>
-      <p>If you need anything during your stay, feel free to reach out.</p>
-      <p>We’re happy to help</p>
-    </div>
-
-  </div>
-</CollapseSection>
-
-
-
-<footer className="footer">
-  <p>With love, Rafael & Jimena</p>
-  <span>July 2026</span>
-</footer>
-      </main>
-      </div>
-    </>
-  )
+/* tapa arriba */
+.obstacle::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 4px;
+  width: 38px;
+  height: 10px;
+  background: #e5e5e5;
+  border-radius: 50%;
+  border: 2px solid #999;
 }
 
-export default App
+/* etiqueta tuna 🐟 */
+.obstacle::after {
+  content: "🐟";
+  position: absolute;
+  font-size: 16px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes obstacleMove {
+  from { right: -80px; }
+  to { right: 105%; }
+}
+
+/* Game over */
+.gameWrap.paused .panamaSkyline,
+.gameWrap.paused .obstacle {
+  animation-play-state: paused;
+}
+
+.gameOver {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  background: rgba(246, 244, 239, 0.72);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameOver h3 {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: 42px;
+  margin: 0 0 8px;
+}
+
+.gameOver p {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+@media (max-width: 850px) {
+  .gameWrap {
+    height: 300px;
+  }
+
+  .gatiBox {
+    left: 35px;
+    width: 78px;
+  }
+
+  .panamaSkyline {
+    height: 120px;
+    padding-left: 180px;
+  }
+}
+
+.rsvpButton {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  background: #050505;
+  color: white;
+  text-decoration: none;
+
+  padding: 14px 28px;
+  border-radius: 999px;
+
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  transition: 0.25s ease;
+}
+
+.rsvpButton:hover {
+  background: white;
+  color: #050505;
+  border: 1px solid #050505;
+}
+
+.calendarButton {
+  position: fixed;
+  top: 80px; /* debajo del RSVP */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  background: white;
+  color: #050505;
+  text-decoration: none;
+
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid #050505;
+
+  font-size: 13px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+
+  transition: 0.25s ease;
+}
+
+.calendarButton:hover {
+  background: #050505;
+  color: white;
+}
+
+.footer {
+  margin-top: 80px;
+  padding: 50px 20px;
+  text-align: center;
+
+  background: rgba(255,255,255,0.4);
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.footer p {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer span {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+
+/* ============================================================
+   SPLASH — la tarjeta sale de un sobre (sin rotaciones)
+   ============================================================ */
+.inviteOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background:
+    radial-gradient(circle at 50% 13%, rgba(203,176,111,0.12), transparent 46%),
+    linear-gradient(160deg, #0a0b0d, #040405 72%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.inviteEnvelope {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: min(92vw, 470px);
+}
+
+.invitationPaper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 34px 26px 82px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid var(--gold);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  animation: cardRise 1.5s 0.3s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+}
+
+.invitationPaper:before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(203,171,104,0.55);
+  pointer-events: none;
+}
+
+.inviteSmall {
+  position: relative;
+  color: #2a2a2a;
+  margin: 0 0 20px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.inviteImage {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid #15140f;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+}
+
+.invitationPaper button {
+  position: relative;
+  z-index: 20;
+  margin-top: 22px;
+  padding: 12px 34px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+  background: #14131a;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  font-size: 12.5px;
+  transition: 0.25s ease;
+}
+
+.invitationPaper button:hover {
+  color: #14131a;
+  background: var(--gold);
+}
+
+/* sobre: bolsillo del que sale la tarjeta */
+.inviteEnvelopeFront {
+  position: relative;
+  z-index: 3;
+  height: 164px;
+  margin-top: -58px;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.55);
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--gold-line) 50%, transparent calc(50% + 1px)) left / 50% 100% no-repeat,
+    linear-gradient(to bottom left, transparent calc(50% - 1px), var(--gold-line) 50%, transparent calc(50% + 1px)) right / 50% 100% no-repeat,
+    linear-gradient(180deg, #161719, #0a0b0d);
+}
+
+@keyframes cardRise {
+  0%   { transform: translateY(80px); opacity: 0; }
+  55%  { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .inviteOverlay { padding: 20px 12px; }
+  .inviteEnvelope { width: 94vw; }
+  .invitationPaper { padding: 26px 16px 70px; }
+  .inviteSmall { font-size: 13px; }
+  .inviteEnvelopeFront { height: 146px; margin-top: -52px; }
+}
+
+/* ============================================================
+   DARK PREMIUM THEME + RESPONSIVE  (al final: sobrescribe arriba)
+   ============================================================ */
+:root {
+  --ink: #050507;
+  --cream: #f4f5f7;
+  --gray: #9aa0a8;
+  --muted: rgba(232, 235, 240, 0.58);
+  --gold: #cbb06f;
+  --gold-line: rgba(203, 176, 111, 0.42);
+  --hair: rgba(236, 239, 244, 0.12);
+}
+
+html, body { overflow-x: hidden; }
+
+body { background: var(--ink); color: var(--cream); }
+
+main {
+  background: linear-gradient(180deg, #000 0%, #050506 55%, #000 100%);
+}
+
+/* HERO */
+.hero::before { opacity: 0.02; }
+.initial {
+  color: rgba(203, 176, 111, 0.04);
+  -webkit-text-stroke: 1px rgba(203, 176, 111, 0.30);
+  text-shadow: 0 0 50px rgba(203, 176, 111, 0.10);
+}
+.amp { color: var(--gold); }
+.saveCard {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--hair);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: var(--cream);
+}
+.topText, .amp, .date, .intro,
+.saveCard h1, .saveCard p { color: var(--cream); }
+.smallCaps, .sectionLabel { color: var(--gold); }
+.smallCaps { color: var(--muted); letter-spacing: 3px; }
+.line { display: none; }
+.heroButtons a { color: var(--cream); border-color: var(--gold-line); }
+.heroButtons a:hover { background: var(--gold); color: #15140f; border-color: var(--gold); }
+
+/* SECTIONS + CARDS */
+.section h2, .detailSection h2 { color: var(--cream); }
+.alt { background: rgba(255, 255, 255, 0.025); }
+.sectionIntro { color: var(--muted); }
+
+.boxButton, .detailCard, .tipCard {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--gold-line);
+  color: var(--cream);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.boxButton:hover { background: var(--gold); color: #15140f; border-color: var(--gold); }
+.featured { background: var(--gold); color: #15140f; border-color: var(--gold); }
+.boxButton span { color: var(--gold); }
+.featured span { color: #15140f; }
+
+.guideColumn h3, .foodColumn h3 { color: var(--cream); }
+.guideColumn a, .foodColumn a { color: var(--muted); }
+.guideColumn a small { color: var(--gold); }
+.guideColumn a:hover, .foodColumn a:hover { color: var(--gold); opacity: 1; }
+.detailCard a, .detailSection a { color: var(--gold); }
+.mapEmbed { border: 1px solid var(--hair); }
+
+.footer {
+  background: #020203;
+  border-top: 1px solid var(--hair);
+  color: var(--muted);
+}
+
+/* RESPONSIVE: grids fluidos (arregla el amontonamiento en móvil) */
+.grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.guideGrid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.detailGrid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.guideListGrid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.tipsGrid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+@media (max-width: 560px) {
+  .section, .detailSection { padding: 60px 18px; }
+  .grid, .guideGrid, .detailGrid,
+  .guideListGrid, .tipsGrid { grid-template-columns: 1fr; }
+}
+
+/* BOTONES FLOTANTES: que no tapen el contenido */
+.rsvpButton { background: var(--gold); color: #15140f; border: 1px solid var(--gold); }
+.rsvpButton:hover { background: transparent; color: var(--gold); border-color: var(--gold); }
+.calendarButton {
+  background: rgba(12, 11, 14, 0.85);
+  color: var(--cream);
+  border: 1px solid var(--gold);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.calendarButton:hover { background: var(--gold); color: #15140f; }
+
+@media (max-width: 700px) {
+  .rsvpButton, .calendarButton {
+    position: fixed;
+    top: auto;
+    bottom: 16px;
+    transform: none;
+    z-index: 1000;
+    font-size: 12px;
+    padding: 12px 0;
+    text-align: center;
+  }
+  .rsvpButton { left: 14px; right: 51%; }
+  .calendarButton { left: 51%; right: 14px; }
+  .footer { padding-bottom: 96px; }
+}
+
+/* ============================================================
+   SECCIONES PLEGABLES (acordeón)
+   ============================================================ */
+.collapsible {
+  padding: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.collapseHeader {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 36px 24px;
+  background: transparent;
+  border: 0;
+  color: var(--cream);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.collapseHeadText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.collapseHeader .sectionLabel {
+  margin: 0;
+}
+
+.collapseTitle {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(26px, 4vw, 46px);
+  line-height: 1.05;
+  color: var(--cream);
+}
+
+.collapseIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--gold);
+  transition: 0.25s ease;
+}
+
+.collapseHeader:hover .collapseIcon {
+  background: var(--gold);
+  color: #15140f;
+  border-color: var(--gold);
+}
+
+.collapseBody {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 24px;
+  transition: max-height 0.55s ease, opacity 0.4s ease, padding 0.4s ease;
+}
+
+.isOpen .collapseBody {
+  max-height: 9000px;
+  opacity: 1;
+  padding: 0 24px 84px;
+}
+
+/* ============================================================
+   GATI GAME — noche premium (al final: sobrescribe arriba)
+   ============================================================ */
+.gameWrap {
+  height: 380px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  background:
+    radial-gradient(circle at 80% 22%, rgba(199,169,107,0.16), transparent 26%),
+    radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.7), transparent 60%),
+    radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.5), transparent 60%),
+    radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.45), transparent 60%),
+    radial-gradient(1px 1px at 12% 40%, rgba(255,255,255,0.4), transparent 60%),
+    linear-gradient(to bottom, #0a0f1e 0%, #0c1226 46%, #11101a 58%, #0a0a0f 100%);
+}
+
+/* horizonte dorado tenue */
+.gameWrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 42%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(199,169,107,0.5), transparent);
+  z-index: 1;
+}
+
+.score {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* edificios: silueta oscura con borde superior dorado */
+.building,
+.sail,
+.curve,
+.screw {
+  background: #0c0c12;
+  border-top: 1px solid rgba(199,169,107,0.35);
+}
+
+/* ventanas cálidas (luz dorada de noche) */
+.building::before {
+  background: rgba(214,182,120,0.85);
+  box-shadow:
+    18px 0 rgba(214,182,120,0.85),
+    0 22px rgba(214,182,120,0.7),
+    18px 22px rgba(214,182,120,0.7),
+    0 44px rgba(214,182,120,0.6),
+    18px 44px rgba(214,182,120,0.6),
+    0 66px rgba(214,182,120,0.5),
+    18px 66px rgba(214,182,120,0.5),
+    0 88px rgba(214,182,120,0.42),
+    18px 88px rgba(214,182,120,0.42),
+    0 110px rgba(214,182,120,0.36),
+    18px 110px rgba(214,182,120,0.36);
+}
+
+/* game over en oscuro */
+.gameOver {
+  background: rgba(5, 5, 6, 0.82);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  color: var(--cream);
+}
+
+.gameOver h3 { color: var(--gold); }
+.gameOver p { color: var(--muted); }
+
+/* ---- Gati: salto fluido + toque instantáneo en iPhone ---- */
+.gameWrap {
+  touch-action: manipulation;            /* quita el delay y el zoom de doble-tap */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gatiBox {
+  will-change: transform;
+}
+
+/* salto basado en transform (GPU) en lugar de 'bottom' */
+.gatiBox.jump {
+  animation: gatiJumpT 0.72s ease;
+}
+
+@keyframes gatiJumpT {
+  0%   { transform: translateY(0); }
+  42%  { transform: translateY(-168px); }
+  58%  { transform: translateY(-168px); }
+  100% { transform: translateY(0); }
+}
+
+/* ---- Gati iPhone: evitar menú de imagen y que el toque pase al juego ---- */
+.gameWrap img {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ============================================================
+   GIFTS — mesa de regalos (bonito)
+   ============================================================ */
+.giftsCard {
+  grid-column: 1 / -1;
+  text-align: center;
+  border-color: var(--gold-line);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(203,176,111,0.10), transparent 60%),
+    rgba(255,255,255,0.035);
+}
+
+.giftsLead {
+  max-width: 520px;
+  margin: 6px auto 22px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.giftsOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.giftBtn {
+  display: inline-block;
+  padding: 13px 30px;
+  background: var(--gold);
+  color: #14130f;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-size: 12.5px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  transition: 0.25s ease;
+}
+
+.giftBtn:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+.giftYappy {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 9px 22px;
+  border: 1px solid var(--gold-line);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+}
+
+.giftYappyLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.giftYappyNum {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--cream);
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   FIX: columnas del guide en dark + quitar subtítulo cropped
+   ============================================================ */
+/* quita el subtítulo recortado de las secciones plegables */
+.collapsible .sectionIntro {
+  display: none;
+}
+
+/* tarjetas del guide (antes grises) -> negro dark mode como el resto */
+.guideColumn {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--gold-line);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.guideColumn h3 {
+  color: var(--cream);
+}
+
+.guideColumn a {
+  color: var(--cream);
+  border-top: 1px solid var(--hair);
+}
+
+.guideColumn span {
+  color: var(--cream);
+}
+
+.guideColumn small {
+  color: var(--muted);
+}
+
+.guideColumn a:hover {
+  opacity: 1;
+}
+
+.guideColumn a:hover span,
+.guideColumn a:hover small {
+  color: var(--gold);
+}
