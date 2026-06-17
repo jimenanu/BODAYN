@@ -892,11 +892,11 @@ h1 {
 .invitationPaper {
   position: absolute;
   top: 90px;
-  left: 42px;
+  left: 26px;
   z-index: 10;
-  width: 346px;
-  min-height: 430px;
-  padding: 34px 26px;
+  width: 378px;
+  min-height: 450px;
+  padding: 30px 20px;
   text-align: center;
   background: #faf7f1;
   border: 1px solid #c7a96b;
@@ -967,7 +967,7 @@ h1 {
   .inviteEnvelopeBack,
   .inviteEnvelopeFront { inset: 80px 0 0; }
   .inviteEnvelopeFlap { width: 340px; height: 145px; top: 80px; }
-  .invitationPaper { width: 286px; padding: 28px 20px; left: 27px; min-height: 380px; }
+  .invitationPaper { width: 304px; padding: 26px 14px; left: 18px; min-height: 400px; }
   @keyframes invitePullPaper {
     0% { transform: translateY(0); }
     to { transform: translateY(-330px); }
@@ -1083,4 +1083,83 @@ main {
   .rsvpButton { left: 14px; right: 51%; }
   .calendarButton { left: 51%; right: 14px; }
   .footer { padding-bottom: 96px; }
+}
+
+/* ============================================================
+   SECCIONES PLEGABLES (acordeón)
+   ============================================================ */
+.collapsible {
+  padding: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.collapseHeader {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 36px 24px;
+  background: transparent;
+  border: 0;
+  color: var(--cream);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.collapseHeadText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.collapseHeader .sectionLabel {
+  margin: 0;
+}
+
+.collapseTitle {
+  font-family: Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(26px, 4vw, 46px);
+  line-height: 1.05;
+  color: var(--cream);
+}
+
+.collapseIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--gold);
+  transition: 0.25s ease;
+}
+
+.collapseHeader:hover .collapseIcon {
+  background: var(--gold);
+  color: #15140f;
+  border-color: var(--gold);
+}
+
+.collapseBody {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 24px;
+  transition: max-height 0.55s ease, opacity 0.4s ease, padding 0.4s ease;
+}
+
+.isOpen .collapseBody {
+  max-height: 9000px;
+  opacity: 1;
+  padding: 0 24px 84px;
 }
