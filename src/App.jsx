@@ -154,11 +154,22 @@ function CollapseSection({ id, className, label, title, children }) {
 }
 
 function App() {
+  const redirect = sessionStorage.redirect
+
+  if (redirect) {
+    sessionStorage.removeItem("redirect")
+    window.history.replaceState(null, "", redirect)
+  }
+
   if (window.location.pathname.includes('/recuerdos')) {
     return <Recuerdos />
   }
+
   if (window.location.pathname.includes('/misal')) {
-  return <Misal />
+    return <Misal />
+  }
+
+  ...
 }
   const [entered, setEntered] = useState(false)
   const [opened, setOpened] = useState(false)
