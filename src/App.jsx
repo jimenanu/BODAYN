@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import Recuerdos from './Recuerdos.jsx'
+import Misal from './Misal.jsx'
 function GatiGame() {
   const [jumping, setJumping] = useState(false)
   const [gameOver, setGameOver] = useState(false)
