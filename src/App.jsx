@@ -247,6 +247,11 @@ function App() {
           <div className="heroButtons">
             <a href="#events">View Events</a>
             <a href="#guide">Guest Guide</a>
+            <div className="galleryCTA">
+  <a href="/recuerdos" className="galleryButton">
+    Nuestra Galería 
+  </a>
+</div>
           </div>
         </div>
       </section>
