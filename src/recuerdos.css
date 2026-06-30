@@ -1,3 +1,33 @@
+body:has(.memoriesPage),
+#root:has(.memoriesPage) {
+  background: #050505 !important;
+}
+
+.memoriesPage {
+  background: #050505 !important;
+  color: #f7e7bc !important;
+}
+
+.memoriesPage::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.94)),
+    linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.35), rgba(0,0,0,.94)),
+    url("/couple.jpg") center / cover no-repeat !important;
+  filter: grayscale(100%) !important;
+  z-index: -3 !important;
+}
+
+.memoriesHero h1 {
+  color: #f5d27e !important;
+  text-shadow:
+    0 1px 0 #fff0bd,
+    0 3px 0 #8d6725,
+    0 14px 32px rgba(0,0,0,.75),
+    0 0 30px rgba(220,180,83,.34) !important;
+}
 .memoriesPage {
   min-height: 100vh;
   background: #050505;
