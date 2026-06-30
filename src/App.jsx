@@ -157,8 +157,12 @@ function App() {
   if (window.location.pathname.includes('/recuerdos')) {
     return <Recuerdos />
   }
+  if (window.location.pathname.includes('/misal')) {
+  return <Misal />
+}
   const [entered, setEntered] = useState(false)
   const [opened, setOpened] = useState(false)
+  
 
   return (
     <>
