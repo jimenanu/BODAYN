@@ -1,1 +1,257 @@
+.memoriesPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(218, 197, 167, 0.35), transparent 34rem),
+    linear-gradient(180deg, #fffaf4 0%, #f7efe6 48%, #ffffff 100%);
+  color: #2f2925;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
 
+.memoriesHero {
+  min-height: 92vh;
+  padding: 56px 22px 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.memoriesHero::before {
+  content: "R&J";
+  position: absolute;
+  top: 26px;
+  left: 24px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(71, 54, 42, 0.2);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-family: Georgia, serif;
+  color: #6e5743;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+}
+
+.memoriesDate {
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: #8a7462;
+  margin: 0 0 18px;
+}
+
+.memoriesHero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(3.1rem, 12vw, 7rem);
+  line-height: 0.9;
+  margin: 0;
+  color: #342a22;
+}
+
+.memoriesCopy {
+  max-width: 430px;
+  margin: 26px auto 28px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #66564a;
+}
+
+.nameCard {
+  width: min(430px, 100%);
+  padding: 14px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(108, 84, 63, 0.14);
+  box-shadow: 0 18px 50px rgba(78, 55, 34, 0.08);
+  margin-bottom: 16px;
+}
+
+.nameCard label {
+  display: block;
+  text-align: left;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7e6756;
+  margin: 0 0 8px;
+}
+
+.nameCard label span {
+  opacity: 0.62;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-left: 6px;
+}
+
+.nameRow {
+  display: flex;
+  gap: 8px;
+}
+
+.nameRow input {
+  flex: 1;
+  border: 1px solid rgba(108, 84, 63, 0.18);
+  border-radius: 999px;
+  padding: 13px 15px;
+  font: inherit;
+  outline: none;
+  background: #fff;
+  color: #342a22;
+}
+
+.nameRow button,
+.uploadButton {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.nameRow button {
+  border-radius: 999px;
+  padding: 0 18px;
+  background: #342a22;
+  color: #fff;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadButton {
+  width: min(430px, 100%);
+  border-radius: 999px;
+  padding: 18px 22px;
+  background: #342a22;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 18px 44px rgba(52, 42, 34, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.uploadButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 58px rgba(52, 42, 34, 0.28);
+}
+
+.uploadButton:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+.counter {
+  margin: 18px 0 0;
+  color: #806b5a;
+  font-size: 0.95rem;
+}
+
+.statusMessage {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #5c4b3d;
+  font-size: 0.9rem;
+}
+
+.gallerySection {
+  padding: 0 18px 70px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.emptyGallery {
+  text-align: center;
+  padding: 42px 20px;
+  border: 1px dashed rgba(108, 84, 63, 0.22);
+  border-radius: 28px;
+  color: #806b5a;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.emptyGallery p {
+  margin: 0 0 6px;
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  color: #342a22;
+}
+
+.masonryGrid {
+  column-count: 4;
+  column-gap: 18px;
+}
+
+.photoCard {
+  break-inside: avoid;
+  margin: 0 0 18px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(63, 48, 36, 0.11);
+  border: 1px solid rgba(108, 84, 63, 0.1);
+}
+
+.photoCard img {
+  width: 100%;
+  display: block;
+}
+
+.photoMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 14px;
+  color: #6b5848;
+  font-size: 0.86rem;
+}
+
+.photoMeta button {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: #f5ece3;
+  color: #7a4f3d;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+  .masonryGrid {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 640px) {
+  .memoriesHero {
+    padding-top: 74px;
+  }
+
+  .masonryGrid {
+    column-count: 2;
+    column-gap: 12px;
+  }
+
+  .photoCard {
+    margin-bottom: 12px;
+    border-radius: 18px;
+  }
+
+  .nameRow {
+    flex-direction: column;
+  }
+
+  .nameRow button {
+    padding: 13px 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .masonryGrid {
+    column-count: 1;
+  }
+}
