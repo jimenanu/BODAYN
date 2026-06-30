@@ -154,18 +154,16 @@ function CollapseSection({ id, className, label, title, children }) {
 }
 
 function App() {
-  const route = window.location.hash.replace("#", "") || "/"
+  const route = window.location.hash.replace('#', '') || '/'
 
-  if (route === "/#/recuerdos") {
+  if (route === '/recuerdos') {
     return <Recuerdos />
   }
 
-  if (route === "/#/misal") {
+  if (route === '/misal') {
     return <Misal />
   }
 
-  ...
-}
   const [entered, setEntered] = useState(false)
   const [opened, setOpened] = useState(false)
   
@@ -254,7 +252,7 @@ function App() {
             <a href="#events">View Events</a>
             <a href="#guide">Guest Guide</a>
             <div className="galleryCTA">
-  <a href="/recuerdos" className="galleryButton">
+  <a href="/#/recuerdos" className="galleryButton">
     Nuestra Galería 
   </a>
 </div>
