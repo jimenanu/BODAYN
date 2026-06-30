@@ -70,7 +70,7 @@ function Recuerdos() {
 
   const saveName = () => {
     localStorage.setItem('guestName', guestName.trim())
-    setMessage('Name saved 🤍')
+    setMessage('Nombre guardado')
     setTimeout(() => setMessage(''), 1800)
   }
 
@@ -78,18 +78,18 @@ function Recuerdos() {
     if (!user || !file) return
 
     if (!file.type.startsWith('image/')) {
-      setMessage('Please choose an image.')
+      setMessage('Please elige una imagen')
       return
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      setMessage('Please upload a photo under 10 MB.')
+      setMessage('Please sube una imagen menos de 10 MB.')
       return
     }
 
     try {
       setIsUploading(true)
-      setMessage('Uploading your memory...')
+      setMessage('Uploading tu recuerdo...')
 
       const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-')
       const fileName = `${Date.now()}-${safeName}`
@@ -110,11 +110,11 @@ function Recuerdos() {
         uploadedAt: serverTimestamp(),
       })
 
-      setMessage('Thank you — your memory was added ✨')
+      setMessage('Thank you — tu recuerdo fue agregado ✨')
       setTimeout(() => setMessage(''), 2500)
     } catch (error) {
       console.error(error)
-      setMessage('Something went wrong. Please try again.')
+      setMessage('Oops. ERROR. Intenta de nuevo!.')
     } finally {
       setIsUploading(false)
       if (fileRef.current) fileRef.current.value = ''
@@ -182,8 +182,8 @@ function Recuerdos() {
       <section className="gallerySection">
         {photos.length === 0 ? (
           <div className="emptyGallery">
-            <p>No memories yet.</p>
-            <span>Be the first to share one 🤍</span>
+            <p>Sin recuerdos agregados aún...</p>
+            <span>Agrega un recuerdo. </span>
           </div>
         ) : (
           <div className="masonryGrid">
