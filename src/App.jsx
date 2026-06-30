@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
-
+import Recuerdos from './Recuerdos.jsx'
 function GatiGame() {
   const [jumping, setJumping] = useState(false)
   const [gameOver, setGameOver] = useState(false)
@@ -153,6 +153,9 @@ function CollapseSection({ id, className, label, title, children }) {
 }
 
 function App() {
+  if (window.location.pathname.includes('/recuerdos')) {
+    return <Recuerdos />
+  }
   const [entered, setEntered] = useState(false)
   const [opened, setOpened] = useState(false)
 
