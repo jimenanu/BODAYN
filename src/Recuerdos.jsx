@@ -138,14 +138,14 @@ function Recuerdos() {
   return (
     <main className="memoriesPage">
       <section className="memoriesHero">
-        <p className="memoriesDate">July 11, 2026</p>
+        <p className="memoriesDate">11 de Julio de 2026</p>
         <h1>Rafael &amp; Jimena</h1>
         <p className="memoriesCopy">
-          Help us relive our wedding through your eyes.
+          Ayudanos a recordar este día, contigo.
         </p>
 
         <div className="nameCard">
-          <label>Your name <span>optional</span></label>
+          <label>Invitado <span>opcional</span></label>
           <div className="nameRow">
             <input
               value={guestName}
@@ -171,7 +171,7 @@ function Recuerdos() {
           disabled={isUploading || !user}
           onClick={() => fileRef.current?.click()}
         >
-          {isUploading ? 'Uploading...' : '📸 Share a Memory'}
+          {isUploading ? 'Uploading...' : 'Agrega un recuerdo'}
         </button>
 
         <p className="counter">♡ {momentsText}</p>
