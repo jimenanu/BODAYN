@@ -154,23 +154,16 @@ function CollapseSection({ id, className, label, title, children }) {
 }
 
 function App() {
-  const [route, setRoute] = useState(window.location.hash.replace('#', '') || '/')
-  const [entered, setEntered] = useState(false)
-  const [opened, setOpened] = useState(false)
+function App() {
+  const route = window.location.hash.replace('#', '') || '/'
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      setRoute(window.location.hash.replace('#', '') || '/')
-    }
+  if (route === '/recuerdos') {
+    return <Recuerdos />
+  }
 
-    window.addEventListener('hashchange', handleHashChange)
-    handleHashChange()
-
-    return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
-  if (route === '/recuerdos') return <Recuerdos />
-  if (route === '/misal') return <Misal />
+  if (route === '/misal') {
+    return <Misal />
+  }
 
   const [entered, setEntered] = useState(false)
   const [opened, setOpened] = useState(false)
