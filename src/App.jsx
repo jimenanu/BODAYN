@@ -154,7 +154,26 @@ function CollapseSection({ id, className, label, title, children }) {
 }
 
 function App() {
-  const route = window.location.hash.replace('#', '') || '/'
+  const [route, setRoute] = useState(
+    window.location.hash.replace('#', '') || '/'
+  )
+
+  const [entered, setEntered] = useState(false)
+  const [opened, setOpened] = useState(false)
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setRoute(window.location.hash.replace('#', '') || '/')
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+
+    // sincroniza al cargar
+    handleHashChange()
+
+    return () =>
+      window.removeEventListener('hashchange', handleHashChange)
+  }, [])
 
   if (route === '/recuerdos') {
     return <Recuerdos />
