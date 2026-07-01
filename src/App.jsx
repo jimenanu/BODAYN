@@ -182,9 +182,6 @@ function App() {
   if (route === '/misal') {
     return <Misal />
   }
-
-  const [entered, setEntered] = useState(false)
-  const [opened, setOpened] = useState(false)
   
 
   return (
