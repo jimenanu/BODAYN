@@ -154,7 +154,6 @@ function CollapseSection({ id, className, label, title, children }) {
 }
 
 function App() {
-function App() {
   const route = window.location.hash.replace('#', '') || '/'
 
   if (route === '/recuerdos') {
